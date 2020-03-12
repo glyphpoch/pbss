@@ -13,6 +13,6 @@ class Extras:
             split_props = s.split("&")
             for p in split_props:
                 line = f"    {p}: {cdict[s]};\n"
-                line += string
+                string += line
             return string
             

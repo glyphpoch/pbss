@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from . import Main
+from .handle import Main
 
 if __name__ == "__main__":
     m = Main()
