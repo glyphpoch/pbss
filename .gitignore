@@ -7,11 +7,6 @@ __pycache__/
 *.e4p
 .eric6project/
 
-# Test files
-style.py
-style.css
-actual.css
-
 # C extensions
 *.so
 
