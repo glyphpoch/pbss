@@ -11,7 +11,8 @@ class Main(Extras):
 
     def get_dict_css(self):
         """
-        Get the given filename and return the 'root' dict
+        Get the given filename and return
+        the 'root' dict
         """
         spec = il.spec_from_file_location("mod", self.readfile)
         mod = il.module_from_spec(spec)
@@ -19,6 +20,10 @@ class Main(Extras):
         return mod.root
         
     def check_pseudo_selector(self,  i,  string):
+        """
+        Check if the given i is a pueudo
+        sellector. Having : in front
+        """
         if i.startswith(":"):
             string = string[:-1]
         string += i + " "
@@ -53,14 +58,13 @@ class Main(Extras):
 
     def writer(self, content):
         """
-        Write 'contents' to file called 'wf'
+        Write 'contents' to file called 'writefile'
         """
         with open(self.writefile, "w") as f:
             f.write(content)
 
     def get_args(self, args):
         """ Parses the CLI args for options """
-        """pbss [--w] rf wf"""
         if len(args) == 0:
             args = sys.argv[1:]
             if len(args) < 2:
@@ -76,12 +80,19 @@ class Main(Extras):
                 self.writefile = os.path.expanduser(args[2])
 
     def parse_selectors(self, base):
+        """
+        Get the selectors and pass them
+        to get_properties
+        """
         for i in base.keys():
             block, nests = self.get_properties([i], base)
             self.content += block
             self.check_nests(nests, base)
 
     def execute(self):
+        """
+        Execute the programs step by step
+        """
         data = self.get_dict_css()
         self.parse_selectors(data)
         self.writer(self.content)
@@ -89,6 +100,9 @@ class Main(Extras):
         self.content = ""
 
     def __init__(self, *args):
+        """
+        Get the arguments and check for watch mode
+        """
         if len(args) == 0:
             self.get_args(args)
         else:

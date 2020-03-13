@@ -1,5 +1,5 @@
 import unittest
-from pbss import Main
+from pbss.handle import Main
 
 class TestPbss(unittest.TestCase):
     def test_pbss(self):
