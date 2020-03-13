@@ -9,4 +9,8 @@ body {
 body nav {
     color: rgb(20, 20, 20);
     font-family: Arial, sans-serif;
+    background: rgb(70, 70, 70);
+}
+body nav a {
+    color: rgba(120, 120, 120, 1.0);
 }
