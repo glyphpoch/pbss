@@ -6,13 +6,3 @@ class Extras:
 
             if len(nests) > 0:
                 self.check_nests(nests, base)
-                
-    def copies(self, s,  cdict):
-        string = ""
-        if "&" in s:
-            split_props = s.split("&")
-            for p in split_props:
-                line = f"    {p}: {cdict[s]};\n"
-                string += line
-            return string
-            

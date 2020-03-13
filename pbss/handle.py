@@ -4,6 +4,7 @@ import sys
 import time
 import os
 from .features import Extras
+from . import copy
 
 class Main(Extras):
     content = ""
@@ -33,6 +34,7 @@ class Main(Extras):
         """
         Get properties and values from given dict
         """
+        base_cp = base.copy()
         string = ""
         nests = []
 
@@ -43,11 +45,8 @@ class Main(Extras):
         string += "{\n"
         for p, v in zip(base.keys(), base.values()):
             if not type(v) == dict:
-                var = super().copies(p, base)
-                if not var is None:
-                    string += var
-                    continue
-                    
+                if isinstance(v, copy):
+                    v = v.resolve(s, base_cp)
                 string += f"    {p}: {v};\n"
             else:
                 path = s.copy()
@@ -113,12 +112,12 @@ class Main(Extras):
             last_mod = os.stat(self.readfile).st_mtime
             while True:
                 try:
-                    a_time = os.stat(self.readfile).st_mtime
-                    if last_mod == a_time:
+                    c_time = os.stat(self.readfile).st_mtime
+                    if last_mod == c_time:
                         time.sleep(1)
                     else:
                         self.execute()
-                        last_mod = a_time
+                        last_mod = c_time
                 except Exception as e:
                     print(e)
-                    last_mod = a_time
+                    last_mod = c_time
