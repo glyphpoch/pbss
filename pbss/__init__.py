@@ -1,6 +1,11 @@
 from .units import *
 from .colors import *
 
+def add(base, d):
+    for k, v in zip(base.keys(), base.values()):
+        d[k] = v
+    return d
+
 class copy:
     def __init__(self, cp_sel,  prefix=None,  suffix=None):
         self.cp_sel = cp_sel

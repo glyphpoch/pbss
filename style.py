@@ -1,5 +1,5 @@
-from pbss.colors import rgb, rgba, als
-from pbss import copy
+from pbss import copy, rgb, rgba, als, add
+import master
 
 root = {
 	"*": {
@@ -19,3 +19,4 @@ root = {
         }
     }
 }
+root = add(root, master.root)
