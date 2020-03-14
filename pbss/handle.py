@@ -3,7 +3,7 @@ import importlib.util as il
 import sys
 import time
 import os
-from .features import Extras, check_pseudo_selector
+from .features import Extras
 from . import copy
 
 class Main(Extras):
@@ -30,7 +30,7 @@ class Main(Extras):
 
         for i in s:
             base = base[i]
-            string = check_pseudo_selector(i,  string)
+            string = super().check_pseudo_selector(i,  string)
 
         string += "{\n"
         for p, v in zip(base.keys(), base.values()):
