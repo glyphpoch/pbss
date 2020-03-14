@@ -1,7 +1,15 @@
 from .units import *
 from .colors import *
+import importlib.util as il
 
-def add(base, d):
+def add(base, readfile):
+    if not readfile.endswith(".py"):
+        readfile += ".py"
+    spec = il.spec_from_file_location("mod", readfile)
+    mod = il.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    d = mod.root
+
     for k, v in zip(base.keys(), base.values()):
         d[k] = v
     return d
