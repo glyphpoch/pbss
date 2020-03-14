@@ -6,3 +6,13 @@ class Extras:
 
             if len(nests) > 0:
                 self.check_nests(nests, base)
+                
+    def check_pseudo_selector(self,  i,  string):
+        """
+        Check if the given i is a pueudo
+        sellector. Having : in front
+        """
+        if i.startswith(":"):
+            string = string[:-1]
+        string += i + " "
+        return string

@@ -3,7 +3,7 @@ import importlib.util as il
 import sys
 import time
 import os
-from .features import Extras
+from .features import Extras, check_pseudo_selector
 from . import copy
 
 class Main(Extras):
@@ -19,16 +19,6 @@ class Main(Extras):
         mod = il.module_from_spec(spec)
         spec.loader.exec_module(mod)
         return mod.root
-        
-    def check_pseudo_selector(self,  i,  string):
-        """
-        Check if the given i is a pueudo
-        sellector. Having : in front
-        """
-        if i.startswith(":"):
-            string = string[:-1]
-        string += i + " "
-        return string
 
     def get_properties(self, s, base):
         """
@@ -40,7 +30,7 @@ class Main(Extras):
 
         for i in s:
             base = base[i]
-            string = self.check_pseudo_selector(i,  string)
+            string = check_pseudo_selector(i,  string)
 
         string += "{\n"
         for p, v in zip(base.keys(), base.values()):
