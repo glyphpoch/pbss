@@ -1,4 +1,8 @@
 class Extras:
+    """
+    Check if nests has any elements and run
+    again if so
+    """
     def check_nests(self, nests, base):
         for ns in nests:
             block, nests = self.get_properties(ns, base)

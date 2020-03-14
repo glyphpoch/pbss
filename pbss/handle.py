@@ -89,6 +89,10 @@ class Main(Extras):
         self.content = ""
         
     def execute(self, *args):
+        """
+        Run to start the program and handles watch
+        mode
+        """
         if len(args) == 0:
             self.get_args(args)
         else:

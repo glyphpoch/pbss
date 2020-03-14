@@ -49,7 +49,7 @@ class rgb:
         
 class rgba:
     """
-    Return an rgba representation of rgb in string
+    Return an rgba representation of rgba in string
     """
     def __str__(self):
         return "rgba" + str(self.rgba)
@@ -95,7 +95,7 @@ class rgba:
         
 class hsl:
     """
-    Return an hsl representation of rgb in string
+    Return an hsl representation of hsl in string
     """
     def __str__(self):
         return "hsl" + str(self.hsl)
@@ -137,7 +137,7 @@ class hsl:
         
 class hsla:
     """
-    Return an hsla representation of rgb in string
+    Return an hsla representation of hsla in string
     """
     def __str__(self):
         return "hsla" + str(self.hsla)
@@ -180,5 +180,14 @@ class hsla:
         return hsla(hue, saturation, lightness, alpha)
         
 class als:
+    """
+    A specal class mainly for alpha channel
+    color arithmetic. The first elements are added 
+    to all above representations and the secound
+    is added to alpha channel
+    """
     def __init__(self, num, alpha):
         self.als = (num, alpha)
+
+
+print(rgba(20, 20, 20, 0.5) + als(20, 0.5))
