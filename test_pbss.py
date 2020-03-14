@@ -3,7 +3,7 @@ from pbss.handle import Main
 
 class TestPbss(unittest.TestCase):
     def test_pbss(self):
-        Main("style.py",  "style.css")
+        Main().execute("style.py",  "style.css")
         with open("actual.css") as r:
             result = r.read()
         with open("style.css") as s:

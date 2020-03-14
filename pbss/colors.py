@@ -151,7 +151,7 @@ class hsla:
         
     def __add__(self, other):
         sum = []
-        if isinstance(other, hslaa):
+        if isinstance(other, hsla):
             for x, y in zip(self.hsla, other.hsla):
                 sum.append(x + y)
         elif isinstance(other, als):

@@ -78,7 +78,7 @@ class Main(Extras):
             self.content += block
             self.check_nests(nests, base)
 
-    def execute(self):
+    def recompile(self):
         """
         Execute the programs step by step
         """
@@ -87,17 +87,14 @@ class Main(Extras):
         self.writer(self.content)
         print(f"Compiled {self.readfile} and wrote to {self.writefile}")
         self.content = ""
-
-    def __init__(self, *args):
-        """
-        Get the arguments and check for watch mode
-        """
+        
+    def execute(self, *args):
         if len(args) == 0:
             self.get_args(args)
         else:
             self.readfile = os.path.expanduser(args[0])
             self.writefile = os.path.expanduser(args[1])
-        self.execute()
+        self.recompile()
         if self.watch_mode:
             last_mod = os.stat(self.readfile).st_mtime
             while True:
@@ -106,7 +103,7 @@ class Main(Extras):
                     if last_mod == c_time:
                         time.sleep(1)
                     else:
-                        self.execute()
+                        self.recompile()
                         last_mod = c_time
                 except Exception as e:
                     print(e)
