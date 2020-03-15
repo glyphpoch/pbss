@@ -188,6 +188,3 @@ class als:
     """
     def __init__(self, num, alpha):
         self.als = (num, alpha)
-
-
-print(rgba(20, 20, 20, 0.5) + als(20, 0.5))
