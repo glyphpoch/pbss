@@ -1,17 +1,26 @@
+"""
+Extra features for pbss like nesting and checking
+for pseudo selectors
+"""
+
 class Extras:
     """
     Check if nests has any elements and run
     again if so
     """
     def check_nests(self, nests, base):
-        for ns in nests:
-            block, nests = self.get_properties(ns, base)
+        """
+        Check if length of nests > 0
+        if so reexecute get_properties
+        """
+        for nest_sel in nests:
+            block, nests = self.get_properties(nest_sel, base)
             self.content += block
 
             if len(nests) > 0:
                 self.check_nests(nests, base)
-                
-    def check_pseudo_selector(self,  i,  string):
+
+    def check_pseudo_selector(self, i, string):
         """
         Check if the given i is a pueudo
         sellector. Having : in front
