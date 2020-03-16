@@ -12,5 +12,6 @@ body nav {
     background: rgb(70, 70, 70);
 }
 body nav a {
+    height: 15vh;
     color: rgba(120, 120, 120, 1.0);
 }
