@@ -108,6 +108,8 @@ class Main(Extras):
                     else:
                         self.recompile()
                         last_mod = c_time
+                except KeyboardInterrupt:
+                    sys.exit(0)
                 except Exception as e:
                     print(e)
                     last_mod = c_time
