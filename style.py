@@ -13,6 +13,11 @@ root = {
                 "color": rgba(100,100,100, 0.5) + als(20,0.5)
             }
         }
+    }, 
+    "@media only screen and (max-width: 768px)": {
+        "nav": {
+            "padding": 0, 
+        }
     }
 }
 

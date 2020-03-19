@@ -29,3 +29,18 @@ class Extras:
             string = string[:-1]
         string += i + " "
         return string
+        
+    def at_ops(self, s, base):
+        """
+        Handle @ commands like @media, @keyframe
+        """
+        if s.startswith("@"):
+            string = "" + s + " {\n"
+            for k in base[s]:
+                block, nests = self.get_properties([k], base[s])
+                string += "    " + block
+            string += "}\n"
+            self.content += string
+            self.check_nests(nests, base[s])
+            return True
+            

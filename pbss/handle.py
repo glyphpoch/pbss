@@ -70,6 +70,9 @@ class Main(Extras):
         to get_properties
         """
         for i in base.keys():
+            at_sel = super().at_ops(i, base)
+            if at_sel:
+                continue
             block, nests = self.get_properties([i], base)
             self.content += block
             self.check_nests(nests, base)
