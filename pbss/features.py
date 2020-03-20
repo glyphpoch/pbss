@@ -38,9 +38,9 @@ class Extras:
             string = "" + s + " {\n"
             for k in base[s]:
                 block, nests = self.get_properties([k], base[s])
-                string += "    " + block
+                for l in block.split("\n"):
+                    string += "    " + l + "\n"
             string += "}\n"
             self.content += string
             self.check_nests(nests, base[s])
             return True
-            

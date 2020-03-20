@@ -17,6 +17,7 @@ body nav a {
 }
 @media only screen and (max-width: 768px) {
     nav {
-    padding: 0;
-}
+        padding: 0;
+    }
+    
 }
