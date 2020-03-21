@@ -21,4 +21,4 @@ root = {
     }
 }
 
-root = add(root, "master")
+root = add(root, "test/master")
