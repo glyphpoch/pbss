@@ -12,8 +12,8 @@ root = {
         "font-family": "Arial"
     }
 }
-root is a dictionary that is required to be in the Python file that is parsed to get the selectors, their properties and values.
 ```
+root is a dictionary that is required to be in the Python file that is parsed to get the selectors, their properties and values.  
 - Run the following command
         python pbss test.py style.css
 The above steps create a file called style.css and it contains the following code
