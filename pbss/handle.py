@@ -2,7 +2,7 @@
 import importlib.util as il
 import sys
 import time
-import os
+from .file import File
 from .features import Extras
 
 class Main(Extras):
@@ -14,7 +14,8 @@ class Main(Extras):
         Get the given filename and return
         the 'root' dict
         """
-        spec = il.spec_from_file_location("mod", self.readfile)
+        readfile = str(self.readfile)
+        spec = il.spec_from_file_location("mod", readfile)
         mod = il.module_from_spec(spec)
         spec.loader.exec_module(mod)
         return mod.root
@@ -45,7 +46,8 @@ class Main(Extras):
         """
         Write 'contents' to file called 'writefile'
         """
-        with open(self.writefile, "w") as f:
+        writefile = str(self.writefile)
+        with open(writefile, "w") as f:
             f.write(content)
 
     def get_args(self, args):
@@ -57,12 +59,15 @@ class Main(Extras):
                 print("Syntax: pbss [-w] rf wf")
                 sys.exit(1)
             if args[0] != "-w":
-                self.readfile = os.path.expanduser(args[0])
-                self.writefile = os.path.expanduser(args[1])
+                self.readfile = File(args[0], "r")
+                self.writefile = File(args[1], "w")
             else:
                 self.watch_mode = True
-                self.readfile = os.path.expanduser(args[1])
-                self.writefile = os.path.expanduser(args[2])
+                self.readfile = File(args[1], "r")
+                self.writefile = File(args[2], "w")
+        else:
+            self.readfile = File(args[0], "r")
+            self.writefile = File(args[1], "w")
 
     def parse_selectors(self, base):
         """
@@ -92,17 +97,13 @@ class Main(Extras):
         Run to start the program and handles watch
         mode
         """
-        if len(args) == 0:
-            self.get_args(args)
-        else:
-            self.readfile = os.path.expanduser(args[0])
-            self.writefile = os.path.expanduser(args[1])
+        self.get_args(args)
         self.recompile()
         if self.watch_mode:
-            last_mod = os.stat(self.readfile).st_mtime
+            last_mod = self.readfile.get_mod_time()
             while True:
                 try:
-                    c_time = os.stat(self.readfile).st_mtime
+                    c_time = self.readfile.get_mod_time()
                     if last_mod == c_time:
                         time.sleep(1)
                     else:
