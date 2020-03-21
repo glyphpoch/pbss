@@ -12,21 +12,21 @@ root = {
         "font-family": "Arial"
     }
 }
+root is a dictionary that is required to be in the Python file that is parsed to get the selectors, their properties and values.
 ```
 - Run the following command
         python pbss test.py style.css
-The above steps create a file called style.py and it contains the following code
+The above steps create a file called style.css and it contains the following code
 ``` CSS
-        body {
-            padding: 0;
-            margin: 0,
-            font-family: Arial;
-        }
+body {
+    padding: 0;
+    margin: 0,
+    font-family: Arial;
+}
 ```
-root is a dictionary that is required to be in the Python file that is parsed to get the selectors, their properties and values.
 
 ## Why Use Pbss over other programs like Sass/Less etc
-Everyone knows that Python is easy and has tonnes of features. All of those features can be used in the root dictionary. Pbss supports nesting of elements (See examples), intelligently detects whether its a pseudo-selector like _:hover_ and it supports continuous watching of file and compiling. Moreover Pbss supports many tools so that you don't have to put them as strings. For example all CSS units are natively supported in Pbss.
+Everyone knows that Python is easy and has tonnes of features. All of those features can be used in the root dictionary. Pbss supports nesting of elements (See docs), color arithmetic, supports CSS units natively intelligently detects whether its a pseudo-selector like _:hover_ and it supports continuous watching of file and compiling. Moreover Pbss supports many tools so that you don't have to put them as strings. For example all CSS units are natively supported in Pbss.
 
 ## Licensing and Price
 Pbss is completely free for personal and commercial use and is Licensed under the open-source MIT License.
