@@ -17,8 +17,10 @@ root = {
     "@media only screen and (max-width: 768px)": {
         "nav": {
             "padding": 0, 
+        },
+        "div": {
+            "margin": 0,
         }
-    }
-}
+}}
 
 root = add(root, "test/master")

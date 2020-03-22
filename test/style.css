@@ -19,5 +19,7 @@ body nav a {
     nav {
         padding: 0;
     }
-    
+    div {
+        margin: 0;
+    }
 }
