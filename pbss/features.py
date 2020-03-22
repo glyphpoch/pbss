@@ -34,7 +34,7 @@ class Extras:
         """
         Handle @ commands like @media, @keyframe
         """
-        if s.startswith("@"):
+        if s.startswith("@") and type(base[s]) == dict:
             string = "" + s + " {\n"
             for k in base[s]:
                 block, nests = self.get_properties([k], base[s])
