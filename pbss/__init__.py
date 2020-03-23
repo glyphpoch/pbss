@@ -19,8 +19,8 @@ def add(base, readfile):
     spec = il.spec_from_file_location("mod", readfile)
     mod = il.module_from_spec(spec)
     spec.loader.exec_module(mod)
-    d = mod.root
+    root_dict = mod.root
 
-    for k, v in zip(base.keys(), base.values()):
-        d[k] = v
-    return d
+    for k, val in zip(base.keys(), base.values()):
+        root_dict[k] = val
+    return root_dict

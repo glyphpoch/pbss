@@ -20,7 +20,8 @@ class Extras:
             if len(nests) > 0:
                 self.check_nests(nests, base)
 
-    def check_pseudo_selector(self, i, string):
+    @classmethod
+    def check_pseudo_selector(cls, i, string):
         """
         Check if the given i is a pueudo
         sellector. Having : in front
@@ -29,18 +30,20 @@ class Extras:
             string = string[:-1]
         string += i + " "
         return string
-        
-    def at_ops(self, s, base):
+
+    def at_ops(self, sel, base):
         """
         Handle @ commands like @media, @keyframe
         """
-        if s.startswith("@") and type(base[s]) == dict:
-            string = "" + s + " {\n"
-            for k in base[s]:
-                block, nests = self.get_properties([k], base[s])
-                for l in block.split("\n")[:-1]:
-                    string += "    " + l + "\n"
+        if sel.startswith("@"):
+            string = "" + sel + " {\n"
+            for k in base[sel]:
+                block, nests = self.get_properties([k], base[sel])
+                for line in block.split("\n")[:-1]:
+                    string += "    " + line + "\n"
             string += "}\n"
-            self.check_nests(nests, base[s])
+            self.check_nests(nests, base[sel])
             self.content += string
             return True
+        return False
+            

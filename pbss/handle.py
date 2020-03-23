@@ -1,3 +1,8 @@
+"""
+Pbss's main file, handkes all of its functionality
+such as reading, parsing, formatting and writing
+"""
+
 #!/usr/bin/env python
 import importlib.util as il
 import sys
@@ -6,6 +11,10 @@ from .file import File
 from .features import Extras
 
 class Main(Extras):
+    """
+    Main class, all functionality are included inside it
+    along with extra features
+    """
     content = ""
     watch_mode = False
 
@@ -20,24 +29,24 @@ class Main(Extras):
         spec.loader.exec_module(mod)
         return mod.root
 
-    def get_properties(self, s, base):
+    def get_properties(self, sel, base):
         """
         Get properties and values from given dict
         """
         string = ""
         nests = []
 
-        for i in s:
+        for i in sel:
             base = base[i]
-            string = super().check_pseudo_selector(i,  string)
+            string = super().check_pseudo_selector(i, string)
 
         string += "{\n"
-        for p, v in zip(base.keys(), base.values()):
-            if not type(v) == dict:
-                string += f"    {p}: {v};\n"
+        for prop, val in zip(base.keys(), base.values()):
+            if not isinstance(val, dict):
+                string += f"    {prop}: {val};\n"
             else:
-                path = s.copy()
-                path.append(p)
+                path = sel.copy()
+                path.append(prop)
                 nests.append(path)
         string += "}\n"
         return string, nests
@@ -45,10 +54,11 @@ class Main(Extras):
     def writer(self, content):
         """
         Write 'contents' to file called 'writefile'
+        by opening it as op_file (opened file)
         """
         writefile = str(self.writefile)
-        with open(writefile, "w") as f:
-            f.write(content)
+        with open(writefile, "w") as op_file:
+            op_file.write(content)
 
     def get_args(self, args):
         """ Parses the CLI args for options """
@@ -91,7 +101,7 @@ class Main(Extras):
         self.writer(self.content)
         print(f"Compiled {self.readfile} and wrote to {self.writefile}")
         self.content = ""
-        
+
     def execute(self, *args):
         """
         Run to start the program and handles watch
@@ -111,6 +121,6 @@ class Main(Extras):
                         last_mod = c_time
                 except KeyboardInterrupt:
                     sys.exit(0)
-                except Exception as e:
-                    print(e)
+                except Exception as excep:
+                    print(excep)
                     last_mod = c_time
