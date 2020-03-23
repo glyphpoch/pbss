@@ -1,8 +1,9 @@
 # Pbss: Practically Better Style Sheets
 Pbss is an attempt to bring Python to CSS. Pbss compiles Python code to CSS. So you get the features of Python and you don't deal with CSS as the code is converted to CSS by Pbss.
 
-## Getting Started With Pbs- Get the latest release from Github and install using pip- Get the latest wheel file from Github and install using pip  
-        pip install pbss_pbssteam-[VERSION_NO]-py3-none-any.whl
+## Getting Started With Pbs
+- Get the latest release from Github and install using pip- Get the latest wheel file from Github and install using pip  
+        pip install pbss-[VERSION_NO]-py3-none-any.whl
 - Create you file containing Python code. Example:- Here we create a simple file test.py to reset body margin and padding along with setting font family to Arial.
 ``` python
 root = {
@@ -15,7 +16,9 @@ root = {
 ```
 root is a dictionary that is required to be in the Python file that is parsed to get the selectors, their properties and values.  
 - Run the following command
-        python pbss test.py style.css
+```
+python pbss test.py style.css
+```
 The above steps create a file called style.css and it contains the following code
 ``` CSS
 body {
