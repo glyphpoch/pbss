@@ -17,7 +17,7 @@ root = {
 root is a dictionary that is required to be in the Python file that is parsed to get the selectors, their properties and values.  
 - Run the following command
 ```
-python pbss test.py style.css
+python -m pbss test.py style.css
 ```
 The above steps create a file called style.css and it contains the following code
 ``` CSS
@@ -32,4 +32,4 @@ body {
 Everyone knows that Python is easy and has tonnes of features. All of those features can be used in the root dictionary. Pbss supports nesting of elements (See docs), color arithmetic, supports CSS units natively intelligently detects whether its a pseudo-selector like _:hover_ and it supports continuous watching of file and compiling. Moreover Pbss supports many tools so that you don't have to put them as strings. For example all CSS units are natively supported in Pbss.
 
 ## Licensing and Price
-Pbss is completely free for personal and commercial use and is Licensed under the open-source MIT License.
+Pbss is completely free for personal, educational and commercial use and is Licensed under the open-source MIT License. It is completely open-source and will always be free for use. Users are free to share, change and use Pbss in anyway they like
