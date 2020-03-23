@@ -21,5 +21,6 @@ body nav a {
     }
     div {
         margin: 0;
+        background: rgba(60, 50, 50, 0.5);
     }
 }

@@ -19,5 +19,8 @@ body nav a {
     nav {
         padding: 0;
     }
-    
+    div {
+        margin: 0;
+        background: rgba(60, 50, 50, 0.5);
+    }
 }

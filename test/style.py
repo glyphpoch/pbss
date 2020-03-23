@@ -20,6 +20,7 @@ root = {
         },
         "div": {
             "margin": 0,
+            "background": rgba(30,20,20,0.2) + als(30,0.3)
         }
 }}
 

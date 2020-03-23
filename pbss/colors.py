@@ -207,11 +207,16 @@ class als:
             for num in other.rgba[:-1]:
                 result.append(num + self.als[0])
             result.append(other.rgba[-1] + self.als[1])
+            red, green, blue, alpha = result
+            result = rgba(red, green, blue, alpha)
 
         elif isinstance(other, hsla):
             for num in other[:-1]:
                 result.append(num + self.als[0])
             result.append(other[-1] + self.als[1])
+            hue, saturation, lightness, alpha = result
+            result = rgba(hue, saturation, lightness, alpha)
+            
         return result
 
     def __rsub__(self, other):
@@ -220,9 +225,14 @@ class als:
             for num in other.rgba[:-1]:
                 result.append(num - self.als[0])
             result.append(other.rgba[-1] - self.als[1])
+            red, green, blue, alpha = result
+            result = rgba(red, green, blue, alpha)
 
         elif isinstance(other, hsla):
             for num in other[:-1]:
                 result.append(num - self.als[0])
             result.append(other[-1] - self.als[1])
+            hue, saturation, lightness, alpha = result
+            result = rgba(hue, saturation, lightness, alpha)
+            
         return result
