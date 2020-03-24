@@ -8,14 +8,13 @@ import importlib.util as il
 import sys
 import time
 from .file import File
-from .features import Extras
+from .parser import Parser
 
-class Main(Extras):
+class Main:
     """
     Main class, all functionality are included inside it
     along with extra features
     """
-    content = ""
     watch_mode = False
 
     def get_dict_css(self):
@@ -28,28 +27,6 @@ class Main(Extras):
         mod = il.module_from_spec(spec)
         spec.loader.exec_module(mod)
         return mod.root
-
-    def get_properties(self, sel, base):
-        """
-        Get properties and values from given dict
-        """
-        string = ""
-        nests = []
-
-        for i in sel:
-            base = base[i]
-            string = super().check_pseudo_selector(i, string)
-
-        string += "{\n"
-        for prop, val in zip(base.keys(), base.values()):
-            if not isinstance(val, dict):
-                string += f"    {prop}: {val};\n"
-            else:
-                path = sel.copy()
-                path.append(prop)
-                nests.append(path)
-        string += "}\n"
-        return string, nests
 
     def writer(self, content):
         """
@@ -79,28 +56,14 @@ class Main(Extras):
             self.readfile = File(args[0], "r")
             self.writefile = File(args[1], "w")
 
-    def parse_selectors(self, base):
-        """
-        Get the selectors and pass them
-        to get_properties
-        """
-        for i in base.keys():
-            at_sel = super().at_ops(i, base)
-            if at_sel:
-                continue
-            block, nests = self.get_properties([i], base)
-            self.content += block
-            self.check_nests(nests, base)
-
     def recompile(self):
         """
         Execute the programs step by step
         """
         data = self.get_dict_css()
-        self.parse_selectors(data)
-        self.writer(self.content)
+        content = Parser(data).get_content()
+        self.writer(content)
         print(f"Compiled {self.readfile} and wrote to {self.writefile}")
-        self.content = ""
 
     def execute(self, *args):
         """
