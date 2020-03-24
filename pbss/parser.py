@@ -1,3 +1,7 @@
+"""
+File containg the main parsing engine
+"""
+
 class Parser:
     content = ""
     @classmethod
