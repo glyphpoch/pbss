@@ -19,7 +19,7 @@ class File:
 
     def get_mod_time(self):
         """ Returns the modified time of the file """
-        self.mod_time = os.stat(self.file).st_time
+        self.mod_time = os.stat(self.file).st_mtime
         return self.mod_time
 
     def __str__(self):

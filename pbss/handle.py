@@ -3,7 +3,6 @@ Pbss's main file, handkes all of its execution
 such as reading,and writing
 """
 
-#!/usr/bin/env python
 import importlib.util as il
 import sys
 import time
