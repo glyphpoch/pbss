@@ -216,7 +216,7 @@ class als:
             result.append(other[-1] + self.als[1])
             hue, saturation, lightness, alpha = result
             result = rgba(hue, saturation, lightness, alpha)
-            
+
         return result
 
     def __rsub__(self, other):
@@ -234,5 +234,5 @@ class als:
             result.append(other[-1] - self.als[1])
             hue, saturation, lightness, alpha = result
             result = rgba(hue, saturation, lightness, alpha)
-            
+
         return result
