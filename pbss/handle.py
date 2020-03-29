@@ -5,9 +5,9 @@ such as reading,and writing
 
 import importlib.util as il
 import sys
-import time
 from .file import File
 from .parser import Parser
+from .watch import watch_file
 
 class Main:
     """
@@ -44,13 +44,13 @@ class Main:
                 print("Reading file and writing file required")
                 print("Syntax: pbss [-w] rf wf")
                 sys.exit(1)
-            if args[0] != "-w":
-                self.readfile = File(args[0], "r")
-                self.writefile = File(args[1], "w")
-            else:
-                self.watch_mode = True
+            if args[0] == "-w":
+                self.watch_mode = "f"
                 self.readfile = File(args[1], "r")
                 self.writefile = File(args[2], "w")
+            else:
+                self.readfile = File(args[0], "r")
+                self.writefile = File(args[1], "w")
         else:
             self.readfile = File(args[0], "r")
             self.writefile = File(args[1], "w")
@@ -71,18 +71,5 @@ class Main:
         """
         self.get_args(args)
         self.recompile()
-        if self.watch_mode:
-            last_mod = self.readfile.get_mod_time()
-            while True:
-                try:
-                    c_time = self.readfile.get_mod_time()
-                    if last_mod == c_time:
-                        time.sleep(1)
-                    else:
-                        self.recompile()
-                        last_mod = c_time
-                except KeyboardInterrupt:
-                    sys.exit(0)
-                except Exception as excep:
-                    print(excep)
-                    last_mod = c_time
+        if self.watch_mode == "f":
+            watch_file(self.readfile, self.recompile)
