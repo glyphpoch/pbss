@@ -4,8 +4,6 @@ import os
 with open("README.md") as r:
     desc = r.read()
 
-os.chmod("pbss/pbss", 0o755)
-
 setuptools.setup(
     name = "pbss",
     version = "1.0",
@@ -21,5 +19,5 @@ setuptools.setup(
         "Operating System :: OS Independent"
         ],
     python_requires = ">=3.7",
-    scripts = ["pbss/pbss"]
+    scripts = ["pbss"]
 )
