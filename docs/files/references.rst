@@ -1,5 +1,6 @@
 References
 ===========
+
 .. module:: pbss
 
 .. function:: add(base, readfile)
@@ -60,7 +61,7 @@ References
 
     .. function:: to_rgba([alpha=1])
 
-        Returns the RGBA representation of the RGB
+        Returns the :class:`RGBA <rgba>` representation of the RGB
 
         ::
 
@@ -95,7 +96,7 @@ References
 
     .. function:: to_rgb()
 
-        Returns the RGB representation of the RGBA by removing alpha
+        Returns the :class:`RGB <rgb>` representation of the RGBA by removing alpha
         and creating new object
 
         ::
@@ -125,7 +126,7 @@ References
 
     .. function:: to_hsla([alpha=1])
 
-        Returns the HSLA representation of the HSL
+        Returns the :class:`HSLA <hsla>` representation of the HSL
 
         ::
 
@@ -160,7 +161,7 @@ References
 
     .. function:: to_hsl()
 
-        Returns the HSL representation of the HSLA by removing alpha
+        Returns the :class:`HSL <hsl>` representation of the HSLA by removing alpha
         and creating new object
 
         ::
@@ -227,4 +228,233 @@ References
         arguments are taken from *sys.argv*. Sets *readfile* and *writefile*
 
     .. function:: recompile()
-        Executes functions 
+
+        Executes functions step by step starting from :func:`get_dict_css`, then run the :class:`parser.Parser` and finally writing the content via the :func:`writer` function
+
+    .. function:: execute()
+
+        This function is executed by the pbss to :func:`parse args <get_args>`, :func:`recompile <recompile>` and start :func:`watch mode <file.File.watch_file>` if requested
+
+.. module:: parser
+
+.. class:: Parser
+
+    This contains all the methods for parsing the dictionary. It handles nesting,
+    pseudo selectors and @ rules
+
+    .. classmethod:: check_pseudo_selector(i, string)
+
+        Check if i starts with *:*, if yes then remove a space from end of ``string`` and join ``string`` with ``i``
+
+        **Params:**
+            ``i``
+                The actual selector on which to test
+            ``string``
+                The string on which if i passes, the last space is removed
+
+    .. function:: at_ops(sel, base):
+
+        Handles media queries and other @ rules, if the selector starts with @
+        then parse all its inside dictionaries using :func:`get_properties` and also :func:`check nests <check_nests>`
+
+        **Params:**
+            ``sel``
+                The actual @ rule on which to test
+            ``base``
+                The ``root`` dictionary
+
+    .. function:: check_nests(nests, base)
+
+        Checks if the nests contains elements, if so there are nested elements in the most recent dictionary parsed inside base and therefore runs :func:`get_properties` on each of them
+
+        **Params:**
+            ``nests``
+                A list of lists containing the path to the nested element
+            ``base``
+                The ``root`` dictionary
+
+    .. function:: get_properties(sel, base)
+
+        The actual engine that parses dictionaries. First navigate to the path specified in ``sel`` list then parse all the keys and values one by one, if any value is instance of dict then copy its path and add it to nests, else format it in the CSS format like this::
+
+                    Key: Value;
+
+        Finally return the generated string and nests
+
+        **Params:**
+            ``sel``
+                A path in form of list to navigate for properties
+            ``base``
+                The ``root`` dictionary
+
+
+    .. function:: get_content()
+
+        Returns the contents finally generated
+
+.. module:: units
+
+.. function:: cm(num)
+
+    Returns num in centimeters
+
+    ::
+
+        cm(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: mm(num)
+
+    Returns num in millimeters
+
+    ::
+
+        mm(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: inc(num)
+
+    Returns num in inches
+
+    ::
+
+        inc(10)
+
+    **Params**:
+        ``num``: The number to be converted]
+
+.. function:: px(num)
+
+    Returns num in pixels
+
+    ::
+
+        px(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: pt(num)
+
+    Returns num in points
+
+    ::
+
+        pt(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: pc(num)
+
+    Returns num in pc
+
+    ::
+
+        pc(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: em(num)
+
+    Returns num in em
+
+    ::
+
+        em(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: ex(num)
+
+    Returns num in ex
+
+    ::
+
+        ex(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: ch(num)
+
+    Returns num in xh
+
+    ::
+
+        ch(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: rem(num)
+
+    Returns num in rem
+
+    ::
+
+        rem(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: vw(num)
+
+    Returns num in vw
+
+    ::
+
+        vw(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: vh(num)
+
+    Returns num in vh
+
+    ::
+
+        vh(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: vmin(num)
+
+    Returns num in vmin
+
+    ::
+
+        vmin(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: vmax(num)
+
+    Returns num in vmax
+
+    ::
+
+        vmax(10)
+
+    **Params**:
+        ``num``: The number to be converted
+
+.. function:: pct(num)
+
+    Returns num in %
+
+    ::
+
+        pct(10)
+
+    **Params**:
+        ``num``: The number to be converted
