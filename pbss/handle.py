@@ -7,7 +7,6 @@ import importlib.util as il
 import sys
 from .file import File
 from .parser import Parser
-from .watch import watch_file
 
 class Main:
     """
@@ -72,4 +71,4 @@ class Main:
         self.get_args(args)
         self.recompile()
         if self.watch_mode == "f":
-            watch_file(self.readfile, self.recompile)
+            self.readfile.watch_file(self.recompile)

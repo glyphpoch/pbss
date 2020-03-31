@@ -2,8 +2,7 @@
 Handles getting file path and additional features
 such as modified time and filename in string form
 """
-import os
-import sys
+import sys, time, os
 
 class File:
     """ The main file class """
@@ -24,3 +23,19 @@ class File:
 
     def __str__(self):
         return self.fpath
+
+    def watch_file(self, func):
+        last_mod = self.get_mod_time()
+        while True:
+            try:
+                c_time = self.get_mod_time()
+                if last_mod == c_time:
+                    time.sleep(1)
+                else:
+                    func()
+                    last_mod = c_time
+            except KeyboardInterrupt:
+                sys.exit(0)
+            except Exception as excep:
+                print(excep)
+                last_mod = c_time
