@@ -24,3 +24,10 @@ def add(base, readfile):
     for k, val in zip(base.keys(), base.values()):
         root_dict[k] = val
     return root_dict
+
+def rept(string, num):
+    """ Returns a multiplication of `string` with `num` """
+
+    line = (string + " ") * (num - 1) 
+    line += string
+    return line
