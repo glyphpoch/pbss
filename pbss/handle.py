@@ -14,6 +14,8 @@ class Main:
     along with extra features
     """
     watch_mode = False
+    VERSION = "pbss-1.0  Python " + sys.version
+    quiet = False
 
     def get_dict_css(self):
         """
@@ -37,22 +39,24 @@ class Main:
 
     def get_args(self, args):
         """ Parses the CLI args for options """
-        if len(args) == 0:
-            args = sys.argv[1:]
-            if len(args) < 2:
-                print("Reading file and writing file required")
-                print("Syntax: pbss [-w] rf wf")
-                sys.exit(1)
-            if args[0] == "-w":
-                self.watch_mode = "f"
-                self.readfile = File(args[1], "r")
-                self.writefile = File(args[2], "w")
-            else:
-                self.readfile = File(args[0], "r")
-                self.writefile = File(args[1], "w")
-        else:
-            self.readfile = File(args[0], "r")
-            self.writefile = File(args[1], "w")
+
+        if "-v" in args:
+            print(self.VERSION)
+            sys.exit()
+
+        if len(args) < 2:
+            print("Reading file and writing file required")
+            print("Syntax: pbss [-wq] rf wf")
+            sys.exit(1)
+
+        self.readfile = File(args[-2], "r")
+        self.writefile = File(args[-1], "w")
+
+        if "-w" in args:
+            self.watch_mode = True
+
+        if "-q" or "-wq" in args:
+            self.quiet = True
 
     def recompile(self):
         """
@@ -61,13 +65,18 @@ class Main:
         data = self.get_dict_css()
         content = Parser(data).get_content()
         self.writer(content)
-        print(f"Compiled {self.readfile} and wrote to {self.writefile}")
+
+        if not self.quiet:
+            print(f"Compiled {self.readfile} and wrote to {self.writefile}")
 
     def execute(self, *args):
         """
         Run to start the program and handles watch
         mode
         """
+        if len(args) == 0:
+            args = sys.argv[1:]
+
         self.get_args(args)
         self.recompile()
         if self.watch_mode == "f":
