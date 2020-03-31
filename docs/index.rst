@@ -4,14 +4,16 @@ Pbss is a compiler that takes Python code and converts it into CSS. It parses a 
 
 This is the official documentation for Pbss containing all references and install instructions. If you want to go through a tutorial to build a basic web layout, click on the Pbss styled link to get a copy of the book
 
+Starters Guide
+#################
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
    :numbered:
 
-   installing
-   getting-started
-   nesting
-   units
-   color-arithmetic
-   add
+   files/installing
+   files/getting-started
+   files/nesting
+   files/units
+   files/color-arithmetic
+   files/add
+   files/references

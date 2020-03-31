@@ -48,7 +48,7 @@ Just for clearance style.py looks something like this
         }
     }
 
-    add("master.py")
+    add(root, "master.py")
 
 This generates the following code
 
