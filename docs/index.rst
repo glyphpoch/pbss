@@ -16,4 +16,5 @@ Starters Guide
    files/units
    files/color-arithmetic
    files/add
+   files/repeat-objects
    files/references

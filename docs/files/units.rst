@@ -52,6 +52,7 @@ The following length units are supported. The arrows denote how they will be com
 * vmin -> vmin
 * vmax -> vmax
 * pct -> %
+* fr -> fr
 
 All the units are functions and simply return a string representing the appropriate CSS value
 

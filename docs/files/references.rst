@@ -472,3 +472,14 @@ References
 
     **Params**:
         ``num``: The number to be converted
+
+.. function:: fr(num)
+
+    Returns num in fr
+
+    ::
+
+        fr(10)
+
+    **Params**:
+        ``num``: The number to be converted
