@@ -25,9 +25,9 @@ def add(base, readfile):
         root_dict[k] = val
     return root_dict
 
-def rept(string, num):
-    """ Returns a multiplication of `string` with `num` """
-
+def rept(obj, num):
+    """ Returns a multiplication of `obj` to `string` with num`"""
+    string = str(obj)
     line = (string + " ") * (num - 1) 
     line += string
     return line
