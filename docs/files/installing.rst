@@ -2,6 +2,8 @@ Installing Pbss
 ===============
 Before using Pbss, you need to install it in your computer. There are different methods of installation
 
+.. highlight:: console
+
 Getting Stable Releases
 ************************
 Recommended Method (Windows, Most \*NIX and Mac OS)
@@ -53,3 +55,9 @@ ____________________________________
 Whenever you want to get the new changes brought by us on these branches, use this command::
 
     git pull
+
+Uninstalling Pbss
+******************
+To uninstall Pbss, type this command in the terminal::
+    
+    pip uninstall pbss
