@@ -10,7 +10,7 @@ Starters Guide
    :maxdepth: 2
    :numbered:
 
-   index
+   self
    files/installing
    files/getting-started
    files/nesting

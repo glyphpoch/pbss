@@ -218,7 +218,7 @@ References
             ``func``
                 The function to be executed when a change occurs
 
-.. module handle
+.. module:: handle
 
 .. class:: Main()
 
@@ -305,6 +305,29 @@ References
     .. function:: get_content()
 
         Returns the contents finally generated
+
+.. module:: properties
+
+.. class:: InvalidPropertyError(prop)
+
+    Error raised when a property is not considered a valid property
+
+.. class:: Property
+
+    Contains a list of CSS properties
+
+    .. function:: exist(prop)
+
+        Checks if a ``prop`` exist in the property list,
+        if not :class:`InvalidPropertyError`
+
+        ::
+
+            Property().exist("height")
+
+        **Params:**
+            ``prop``
+                This is checked if it is present in a list containing all properties
 
 .. module:: units
 
