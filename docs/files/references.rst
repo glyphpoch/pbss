@@ -25,7 +25,7 @@ References
             The file path whose ``root`` dict is to be joint
             The file extension must be *.py* but can be omitted in argument
 
-.. function:: rept(num, *args)
+.. function:: rept(num, *args, delimiter=" ")
 
     Returns a string by multiplying ``obj`` with num. Note object can be of any type. It will be converted to string by the function
 
@@ -36,8 +36,11 @@ References
     **Params:**
         ``num``
             Number of times the object has to be multiplied
-        ``\*args``
+        ``*args``
             An arbitrary number of objects to be multiplied. Note it will be converted to string
+        *Optional* ``delimiter``
+            An optional delimiter to separate the objects in the string. Default is space " "
+            
 
 .. module:: colors
 
