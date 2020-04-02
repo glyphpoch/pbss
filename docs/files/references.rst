@@ -25,19 +25,19 @@ References
             The file path whose ``root`` dict is to be joint
             The file extension must be *.py* but can be omitted in argument
 
-.. function:: rept(obj, num)
+.. function:: rept(num, *args)
 
     Returns a string by multiplying ``obj`` with num. Note object can be of any type. It will be converted to string by the function
 
     ::
 
-        rept(em(1), 4)
+        rept(4, em(1))
 
     **Params:**
-        ``obj``
-            Any object that will be converted to string and multiplied
         ``num``
             Number of times the object has to be multiplied
+        ``\*args``
+            An arbitrary number of objects to be multiplied. Note it will be converted to string
 
 .. module:: colors
 

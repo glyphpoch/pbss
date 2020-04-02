@@ -25,7 +25,7 @@ Now let's write the above code. We will also make use of the new ``fr`` unit add
     root = {
         "section": {
             "display": "grid",
-            "grid-template-columns": rept(fr(1), 4)
+            "grid-template-columns": rept(4, fr(1))
         }
     }
 
