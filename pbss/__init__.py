@@ -5,8 +5,9 @@ pbss functionality instaed of importing each module
 from pbss import *
 """
 import importlib.util as il
-from .units import *
-from .colors import *
+# from .units import *
+# from .colors import *
+from units import *
 
 def add(base, readfile):
     """
@@ -25,9 +26,17 @@ def add(base, readfile):
         root_dict[k] = val
     return root_dict
 
-def rept(obj, num):
-    """ Returns a multiplication of `obj` to `string` with num`"""
-    string = str(obj)
-    line = (string + " ") * (num - 1) 
-    line += string
-    return line
+def rept(num, *args):
+    """
+    Returns a repeatative multiplicaion of a string
+    """
+    # First join the tuple with spaces and add one
+    # extra space at end. Then multiply it num -1
+    # so that there are no whitespace left
+    # latsly join the tuple one more time with space
+    # and add it to string
+
+    string = (" ".join(args) + " ") * (num - 1)
+    string += " ".join(args)
+    
+    return string
