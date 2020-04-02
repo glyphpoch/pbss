@@ -2,6 +2,8 @@
 File containg the main parsing engine
 """
 
+from .properties import Property
+
 class Parser:
     content = ""
     @classmethod
@@ -57,7 +59,8 @@ class Parser:
         string += "{\n"
         for prop, val in zip(base.keys(), base.values()):
             if not isinstance(val, dict):
-                string += f"    {prop}: {val};\n"
+                if Property().exist(prop):
+                    string += f"    {prop}: {val};\n"
             else:
                 path = sel.copy()
                 path.append(prop)

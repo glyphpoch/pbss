@@ -55,7 +55,7 @@ class Main:
         if "-w" in args:
             self.watch_mode = True
 
-        if "-q" or "-wq" in args:
+        if "-q" in args or "-wq" in args:
             self.quiet = True
 
     def recompile(self):
@@ -79,5 +79,5 @@ class Main:
 
         self.get_args(args)
         self.recompile()
-        if self.watch_mode == "f":
+        if self.watch_mode:
             self.readfile.watch_file(self.recompile)
