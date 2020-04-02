@@ -13,8 +13,9 @@ class Main:
     Main class, all functionality are included inside it
     along with extra features
     """
-    watch_mode = False
+
     VERSION = "pbss-1.0  Python " + sys.version
+    watch_mode = False
     quiet = False
 
     def get_dict_css(self):
@@ -80,4 +81,4 @@ class Main:
         self.get_args(args)
         self.recompile()
         if self.watch_mode:
-            self.readfile.watch_file(self.recompile)
+            self.readfile.watch_file(self.recompile, self.quiet)

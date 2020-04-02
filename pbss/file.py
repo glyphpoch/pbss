@@ -24,7 +24,7 @@ class File:
     def __str__(self):
         return self.fpath
 
-    def watch_file(self, func):
+    def watch_file(self, func, quiet=False):
         last_mod = self.get_mod_time()
         while True:
             try:
@@ -37,5 +37,6 @@ class File:
             except KeyboardInterrupt:
                 sys.exit(0)
             except Exception as excep:
-                print(excep)
-                last_mod = c_time
+                if not quiet:
+                    print(excep)
+                    last_mod = c_time

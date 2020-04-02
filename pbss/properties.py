@@ -1,8 +1,8 @@
 class InvalidPropertyError(Exception):
 
 	def __init__(self, prop):
-		message = f"Property '{prop}' is not a valid CSS property"
-		super().__init__(message)
+		msg = f"Property '{prop}' is not a valid CSS property "
+		super().__init__(msg)
 
 
 class Property:
