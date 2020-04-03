@@ -3,7 +3,7 @@ Attach: Join Files
 How many times you wanted to break your style sheet into two or more files. CSS dose not support that unless you change your HTML. Well Pbss has you covered. We have a feature that attaches any number of files you like with just one line of code. ``attach()`` is a function that joins the root dictionary of any number of files. For example, we have two files
 master.py and style.py with the following code in master.py
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     root = {
@@ -14,7 +14,7 @@ master.py and style.py with the following code in master.py
 
 The style.py contains the following code
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     root = {
@@ -36,7 +36,7 @@ add takes the filename to be added and add it at the beginning of the ``root`` d
 
 Just for clearance style.py looks something like this
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     from pbss import *
@@ -68,7 +68,7 @@ But maybe you want to reverse the order. Maybe you want that *body* should come 
     
     root = attach(root, "master.py", placement="b")
 
-Now here's your stylesheet
+Now here's your style sheet
 
 .. code-block:: css
     :linenos:

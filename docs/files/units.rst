@@ -11,7 +11,7 @@ CSS Lengths
 ###########
 Let's declare the height and width of a div using this
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     from pbss import *
@@ -60,7 +60,7 @@ CSS Colors
 ##########
 Pbss supports CSS colors like *rgb*, *rgba*, *hsl*, *hsla* natively. Let's declare the background and foreground color of a div
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     from pbss import *

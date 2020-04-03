@@ -35,7 +35,7 @@ This creates a file _style.css_ with the following content
 
 * If you want your code should be compiled as soon as you save your Python file, you should put the `-w` option to pbss like this::
 
-    python -m pbss -w style.py style.css
+    $ python -m pbss -w style.py style.css
     Compiled style.py and wrote to style.css
 
 This would continuously watch for changes on the Python file and compile as soon as the file changes

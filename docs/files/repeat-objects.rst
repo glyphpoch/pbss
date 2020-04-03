@@ -19,7 +19,7 @@ First, as usual to get any Pbss's native functionality, you need to do the impor
 
 Now let's write the above code. We will also make use of the new ``fr`` unit added to Pbss
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     root = {
@@ -59,7 +59,7 @@ This will generate this code
 
 You can also say rept to use delimiters to separate the above objects by passing the optional ``delimiter`` keyword argument. By default this is set to a space " ". Let's take the above code sample and put a comma as delimiter
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     root = {

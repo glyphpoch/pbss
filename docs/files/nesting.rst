@@ -2,7 +2,7 @@ Nesting
 =======
 Pbss supports nesting which means selectors can be nested one inside the other similar to HTML. Let's write a code a *nav* selector with certain properties with a *ul* containing its own properties
 
-.. code-block::
+.. code-block:: python
     :linenos:
 
     root = {
