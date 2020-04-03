@@ -3,9 +3,9 @@ References
 
 .. module:: pbss
 
-.. function:: add(base, readfile)
+.. function:: attach(base, *args, placement="e")
 
-    Returns a dictionary  by joining the base ``root`` dictionary and the readfile ``root`` dictionary
+    Returns a dictionary by opening all files in ``args`` and joining their ``root`` with base. ``placement`` determines whether ``base`` should be placed at beginning or end
 
     ::
 
@@ -21,9 +21,11 @@ References
         ``base``
             The *root* dictionary of the module to which readfile
             should be joint
-        ``readfile``
-            The file path whose ``root`` dict is to be joint
+        ``*args``
+            an arbitrary number of file paths whose ``root`` dict is to be joint
             The file extension must be *.py* but can be omitted in argument
+        *Optional* ``placement``
+            Can take either "b" or "e", tells whether ``base`` should be placed at beginning or at the very end of the returning dictionary
 
 .. function:: rept(num, *args, delimiter=" ")
 

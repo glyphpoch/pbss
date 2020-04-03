@@ -28,7 +28,7 @@ def rept(num, *args, delimiter=" "):
     
     return string
 
-def attach(base, *args, placement="b"):
+def attach(base, *args, placement="e"):
     master = {}
 
     if placement == "b":
