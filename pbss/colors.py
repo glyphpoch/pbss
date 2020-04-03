@@ -13,6 +13,9 @@ class rgb:
             return self.to_hex()
         return "rgb" + str(self.rgb)
 
+    def __repr__(self):
+        return "rgb" + str(self.rgb)
+
     def __init__(self, red, green, blue, is_hex=False):
         self.rgb = (red, green, blue)
         self.is_hex = is_hex
@@ -66,6 +69,9 @@ class rgba:
     def __str__(self):
         return "rgba" + str(self.rgba)
 
+    def __repr__(self):
+        return "rgba" + str(self.rgba)
+
     def __init__(self, red, green, blue, alpha):
         self.rgba = (red, green, blue, alpha)
 
@@ -107,6 +113,9 @@ class hsl:
     Return an hsl representation of hsl in string
     """
     def __str__(self):
+        return "hsl" + str(self.hsl)
+
+    def __repr__(self):
         return "hsl" + str(self.hsl)
 
     def __init__(self, hue, saturation, lightness):
@@ -153,6 +162,9 @@ class hsla:
     Return an hsla representation of hsla in string
     """
     def __str__(self):
+        return "hsla" + str(self.hsla)
+
+    def __repr__(self):
         return "hsla" + str(self.hsla)
 
     def __init__(self, hue, saturation, lightness, alpha):

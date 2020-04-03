@@ -1,25 +1,17 @@
-html {
-    font-size: 20;
-}
-* {
-    font-family: Arial, sans-serif;
-}
 body {
     padding: 0;
-    background: rgb(20, 20, 20);
+    margin: 0;
 }
-body nav {
-    background: rgb(70, 70, 70);
-}
-body nav a {
-    height: 15vh;
-    color: rgba(120, 120, 120, 1.0);
+div {
+    height: 10vh;
+    width: 50em;
 }
 @media only screen and (max-width: 768px) {
-    nav {
-        padding: 0;
-    }
     div {
-        margin: 0;
+        height: 50vh;
+        width: 10em;
     }
+}
+html {
+    font-size: 20;
 }
