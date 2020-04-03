@@ -8,23 +8,6 @@ import importlib.util as il
 from .units import *
 from .colors import *
 
-def add(base, readfile):
-    """
-    Takes base as the root dict and reads readfile
-    to get the root of that file. The readfile can
-    have the .py extension but can be ommited
-    """
-    if not readfile.endswith(".py"):
-        readfile += ".py"
-    spec = il.spec_from_file_location("mod", readfile)
-    mod = il.module_from_spec(spec)
-    spec.loader.exec_module(mod)
-    root_dict = mod.root
-
-    for k, val in zip(base.keys(), base.values()):
-        root_dict[k] = val
-    return root_dict
-
 def rept(num, *args, delimiter=" "):
     """
     Returns a repeatative multiplicaion of a string
@@ -44,3 +27,38 @@ def rept(num, *args, delimiter=" "):
     string += delimiter.join(args)
     
     return string
+
+def attach(base, *args, placement="b"):
+    master = {}
+
+    if placement == "b":
+        for k, val in zip(base.keys(), base.values()):
+            master[k] = val
+        for fn in args:
+            if not fn.startswith(".py"):
+                fn += ".py"
+
+            spec = il.spec_from_file_location("mod", fn)
+            mod = il.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            rdict = mod.root
+
+            for k, val in zip(rdict.keys(), rdict.values()):
+                master[k] = val
+
+    if placement == "e":
+        for fn in args:
+            if not fn.startswith(".py"):
+                fn += ".py"
+
+            spec = il.spec_from_file_location("mod", fn)
+            mod = il.module_from_spec(spec)
+            spec.loader.exec_module(mod)
+            rdict = mod.root
+
+            for k, val in zip(rdict.keys(), rdict.values()):
+                master[k] = val
+        for k, val in zip(base.keys(), base.values()):
+            master[k] = val
+
+    return master
