@@ -1,5 +1,8 @@
-CSS Arithmetic
+Color Arithmetic
 ===============
+
+..highlight:: python
+
 Pbss can handle color arithmetic which means that two colors of the same class can be added together, In order to use these, first import pbss::
 
     from pbss import *
