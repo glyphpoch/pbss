@@ -44,7 +44,6 @@ class Main:
         if "-v" in args:
             print(self.VERSION)
             sys.exit()
-
         if len(args) < 2:
             print("Reading file and writing file required")
             print("Syntax: pbss [-wq] rf wf")
@@ -52,12 +51,13 @@ class Main:
 
         self.readfile = File(args[-2], "r")
         self.writefile = File(args[-1], "w")
-
-        if "-w" in args:
-            self.watch_mode = True
-
-        if "-q" in args or "-wq" in args:
-            self.quiet = True
+            if "-w" in args:
+                self.watch_mode = True
+            if "-q" in args:
+                self.quiet = True
+            if "-wq" in args:
+                self.quiet = True
+                self.watch_mode = True
 
     def recompile(self):
         """
