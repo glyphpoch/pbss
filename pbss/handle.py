@@ -49,15 +49,16 @@ class Main:
             print("Syntax: pbss [-wq] rf wf")
             sys.exit(1)
 
+        if "-w" in args:
+            self.watch_mode = True
+        if "-q" in args:
+            self.quiet = True
+        if "-wq" in args:
+            self.quiet = True
+            self.watch_mode = True
+
         self.readfile = File(args[-2], "r")
         self.writefile = File(args[-1], "w")
-            if "-w" in args:
-                self.watch_mode = True
-            if "-q" in args:
-                self.quiet = True
-            if "-wq" in args:
-                self.quiet = True
-                self.watch_mode = True
 
     def recompile(self):
         """
