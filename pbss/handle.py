@@ -14,7 +14,7 @@ class Main:
     along with extra features
     """
 
-    VERSION = "pbss-1.0  Python " + sys.version
+    VERSION = "pbss-1.1  Python " + sys.version
     watch_mode = False
     quiet = False
 
