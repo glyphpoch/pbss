@@ -23,20 +23,10 @@ class Main:
         Get the given filename and return
         the 'root' dict
         """
-        readfile = str(self.readfile)
         spec = il.spec_from_file_location("mod", readfile)
         mod = il.module_from_spec(spec)
         spec.loader.exec_module(mod)
         return mod.root
-
-    def writer(self, content):
-        """
-        Write 'contents' to file called 'writefile'
-        by opening it as op_file (opened file)
-        """
-        writefile = str(self.writefile)
-        with open(writefile, "w") as op_file:
-            op_file.write(content)
 
     def get_args(self, args):
         """ Parses the CLI args for options """
@@ -64,9 +54,9 @@ class Main:
         """
         Execute the programs step by step
         """
-        data = self.get_dict_css()
+        data = self.readfile.get_dict_css()
         content = Parser(data).get_content()
-        self.writer(content)
+        self.writefile.writer(content)
 
         if not self.quiet:
             print(f"Compiled {self.readfile} and wrote to {self.writefile}")

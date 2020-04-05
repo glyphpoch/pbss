@@ -3,6 +3,7 @@ Handles getting file path and additional features
 such as modified time and filename in string form
 """
 import sys, time, os
+import importlib.util as il
 
 class File:
     """ The main file class """
@@ -40,3 +41,21 @@ class File:
                 if not quiet:
                     print(excep)
                     last_mod = c_time
+
+    def get_dict_css(self):
+        """
+        Get the given filename and return
+        the 'root' dict
+        """
+        spec = il.spec_from_file_location("mod", self.file)
+        mod = il.module_from_spec(spec)
+        spec.loader.exec_module(mod)
+        return mod.root
+
+    def writer(self, content):
+        """
+        Write 'contents' to file called 'writefile'
+        by opening it as op_file (opened file)
+        """
+        with open(self.file, "w") as op_file:
+            op_file.write(content)
