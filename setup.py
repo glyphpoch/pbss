@@ -8,7 +8,7 @@ os.chmod("pbss/pbss", 0o755)
 
 setuptools.setup(
     name = "pbss",
-    version = "1.0",
+    version = "1.1",
     author = "Arijit Dey",
     author_email = "arijid79@gmail.com",
     description = "Practically Better Stylesheets",
