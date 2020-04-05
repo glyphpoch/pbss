@@ -3,6 +3,8 @@ Extra features for pbss like nesting and checking
 for pseudo selectors
 """
 
+# Test comment for CI
+
 class Extras:
     """
     Check if nests has any elements and run
