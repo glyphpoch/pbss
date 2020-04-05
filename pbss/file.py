@@ -13,7 +13,7 @@ class File:
             self.file = os.path.expanduser(fp)
             
     def get_mod_time(self):
-        self.mod_time = os.stat(self.file).st_time
+        self.mod_time = os.stat(self.file).st_mtime
         return self.mod_time
         
     def __str__(self):
