@@ -4,4 +4,6 @@ Contents
    :maxdepth: 2
    :numbered:
 
+   self
    installing
+   html
