@@ -13,8 +13,14 @@ So before we get our hands dirty with the code let's first take care of what we 
 
 Let's see what are the basic requirements to use Pbss
 
-* Pbss
 * Python (3.7 or greater)
+* Pbss
 * A web browser (Firefox recommended since it has better CSS tools)
 * A text editor (Sublime Text, Atom, VS code)
 * A command line (Command Prompt/Terminal/PowerShell)
+
+Installing On Windows
+---------------------
+Getting Python
+_______________
+* Go to `<https://python.org>`_

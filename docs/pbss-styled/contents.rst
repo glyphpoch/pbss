@@ -1,8 +1,7 @@
 Contents
 ========
 .. toctree::
-    :maxdepth: 2
-    :numbered:
+   :maxdepth: 2
+   :numbered:
 
-    self
-    installing
+   installing
