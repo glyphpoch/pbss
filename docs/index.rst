@@ -19,3 +19,4 @@ Starters Guide
    files/add
    files/repeat-objects
    files/references
+   pbss-styled/index
