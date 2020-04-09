@@ -35,7 +35,7 @@ def attach(base, *args, placement="e"):
         for k, val in zip(base.keys(), base.values()):
             master[k] = val
         for fn in args:
-            if not fn.startswith(".py"):
+            if not fn.endswith(".py"):
                 fn += ".py"
 
             spec = il.spec_from_file_location("mod", fn)
@@ -48,7 +48,7 @@ def attach(base, *args, placement="e"):
 
     if placement == "e":
         for fn in args:
-            if not fn.startswith(".py"):
+            if not fn.endswith(".py"):
                 fn += ".py"
 
             spec = il.spec_from_file_location("mod", fn)
