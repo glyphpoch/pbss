@@ -54,7 +54,7 @@ class Main:
         """
         Execute the programs step by step
         """
-        data = self.readfile.get_dict_css()
+        data = self.readfile.get_module().root
         content = Parser(data).get_content()
         self.writefile.writer(content)
 

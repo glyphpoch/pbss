@@ -20,6 +20,7 @@ class File:
             if not os.path.isfile(self.file):
                 print(f"'{fpath}': No such file")
                 sys.exit(1)
+
         if fmod == "w":
             self.file = os.path.expanduser(fpath)
 
@@ -50,7 +51,7 @@ class File:
                     print(excep)
                     last_mod = c_time
 
-    def get_dict_css(self):
+    def get_module(self):
         """
         Get the given filename and return
         the 'root' dict
@@ -61,7 +62,7 @@ class File:
         spec = il.spec_from_file_location("mod", self.file)
         mod = il.module_from_spec(spec)
         spec.loader.exec_module(mod)
-        return mod.root
+        return mod
 
     def writer(self, content):
         """

@@ -7,6 +7,7 @@ from pbss import *
 import importlib.util as il
 from .units import *
 from .colors import *
+from .file import File
 
 def rept(num, *args, delimiter=" "):
     """
@@ -37,12 +38,7 @@ def attach(base, *args, placement="e"):
         for fn in args:
             if not fn.endswith(".py"):
                 fn += ".py"
-
-            spec = il.spec_from_file_location("mod", fn)
-            mod = il.module_from_spec(spec)
-            spec.loader.exec_module(mod)
-            rdict = mod.root
-
+            rdict = File(fn, "r").get_module().root
             for k, val in zip(rdict.keys(), rdict.values()):
                 master[k] = val
 
@@ -50,12 +46,7 @@ def attach(base, *args, placement="e"):
         for fn in args:
             if not fn.endswith(".py"):
                 fn += ".py"
-
-            spec = il.spec_from_file_location("mod", fn)
-            mod = il.module_from_spec(spec)
-            spec.loader.exec_module(mod)
-            rdict = mod.root
-
+            rdict = File(fn, "r").get_module().root
             for k, val in zip(rdict.keys(), rdict.values()):
                 master[k] = val
         for k, val in zip(base.keys(), base.values()):
