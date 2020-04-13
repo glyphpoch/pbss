@@ -29,6 +29,29 @@ def rept(num, *args, delimiter=" "):
     
     return string
 
+def cal(exp):
+    ops = ["+", "-", "*", "/"]
+    operator = None
+    unit = []
+    split_exp = None
+
+    # Find operator and break the expression in digits
+    for op in ops:
+        if op in exp:
+            split_exp = exp.split(op)
+            operator = op
+    # Find unit
+    for char in split_exp[0]:
+        if char.isalpha():
+            unit.append(char)
+    unit = "".join(unit)
+
+    for index, digit in enumerate(split_exp):
+        split_exp[index] = split_exp[index][:-len(unit)]
+    # Return result
+    expression = operator.join(split_exp)
+    return eval(expression)
+
 def attach(base, *args, placement="e"):
     master = {}
 
