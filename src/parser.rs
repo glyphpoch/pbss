@@ -19,10 +19,9 @@ pub fn read_file(file: String) -> String {
 }
 
 pub fn break_blocks(block: String) -> Vec<String> {
-	let items = block.split("}");
-	let items: Vec<&str> = items.collect();
+	let items: Vec<&str> = block.split("}").collect();
 	let items: Vec<&str> = items[..(items.len() -1)].to_vec();
-	let mut blocks: Vec<String> = [].to_vec();
+	let mut blocks: Vec<String> = Vec::new();
 	for item in &items {
 		let mut item: String = item.to_string();
 		item.push('}');
@@ -49,4 +48,25 @@ pub fn break_tokens(block: &mut String) -> (&str, &str) {
 	let tokens = block.split_at(place.unwrap());
 	
 	return tokens;
+}
+
+pub fn format_property(block: String) -> (Vec<String>, Vec<String>) {
+	let block: String = block[1..block.len() -1].to_string();
+	let key_value_pair: Vec<&str> = block.split(";").collect();
+	let key_value_pair = key_value_pair[..(key_value_pair.len() -1)].to_vec();
+	let mut keys: Vec<String> = Vec::new();
+	let mut values: Vec<String> = Vec::new();
+	
+	for item in key_value_pair {
+		let key_value: Vec<&str> = item.split(":").collect();
+		keys.push(key_value[0].to_string())	;
+		values.push(key_value[1].to_string());
+
+		for v in &mut values {
+			if v.chars().nth(0).unwrap() == ' '{
+				v.remove(0);
+			};}
+	}
+
+	return (keys, values)
 }
