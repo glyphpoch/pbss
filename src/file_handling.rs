@@ -28,7 +28,7 @@ pub fn writer(map: HashMap<String, HashMap<String, String>>, sequence: Vec<Strin
 }
 
 pub fn write_blocks(blocks: String, output: String){
-	if output == "#s" {
+	if output == ":s" {
 		println!("{}", blocks);
 	} else {
 		check_writefile(&output);
