@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file
 
+# [v1.2] - 2020-04-25
+### Changed
+* Rewrote the entire codebase in the Rust language
+
 # [v1.1] - 2020-04-04
 
 ### Added
