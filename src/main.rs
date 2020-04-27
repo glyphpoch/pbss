@@ -21,26 +21,26 @@ impl Arguments {
 
 fn main() {
 	let arguments: Arguments = Arguments::new();
+    let mut style_map: HashMap<String, HashMap<String, String> > = HashMap::new();
+
 	file_handling::check_readfile(&arguments.readfile);
-	// file_handling
+    let contents = parser::read_file(&arguments.readfile);
+    parser::parse("$background: white;".to_string());
+    // let mut selector_sequence: Vec<String> = Vec::new();
+    // let blocks = parser::break_blocks(contents);
 
-	let mut style_map: HashMap<String, HashMap<String, String> > = HashMap::new();
-    let contents = parser::read_file(arguments.readfile);
-    let mut selector_sequence: Vec<String> = Vec::new();
-    let blocks = parser::break_blocks(contents);
+    // for mut b in blocks {
+    // 	parser::strip_newlines(&mut b);
+    // 	let tokens = parser::break_tokens(&mut b);
+    // 	let mut prop_map: HashMap<String, String> = HashMap::new();
+    // 	let (keys, values) = parser::format_property(tokens.1.to_string());
+    // 	selector_sequence.push(tokens.0.to_string());
+    // 	for (key, val) in keys.iter().zip(values.iter()){
+    // 		prop_map.insert(key.to_string(), val.to_string());
+    // 	}
+    // 	style_map.insert(tokens.0.to_string(), prop_map);
+    // }
 
-    for mut b in blocks {
-    	parser::strip_newlines(&mut b);
-    	let tokens = parser::break_tokens(&mut b);
-    	let mut prop_map: HashMap<String, String> = HashMap::new();
-    	let (keys, values) = parser::format_property(tokens.1.to_string());
-    	selector_sequence.push(tokens.0.to_string());
-    	for (key, val) in keys.iter().zip(values.iter()){
-    		prop_map.insert(key.to_string(), val.to_string());
-    	}
-    	style_map.insert(tokens.0.to_string(), prop_map);
-    }
-
-    let blocks = file_handling::writer(style_map, selector_sequence);
-    file_handling::write_blocks(blocks, arguments.writefile)
+    // let blocks = file_handling::writer(style_map, selector_sequence);
+    // file_handling::write_blocks(blocks, arguments.writefile)
 }

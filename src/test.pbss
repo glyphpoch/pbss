@@ -1,0 +1,7 @@
+div {
+	color: white;
+}
+
+section {
+	background: magenta;
+}
