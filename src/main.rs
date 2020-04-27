@@ -25,7 +25,7 @@ fn main() {
 
 	file_handling::check_readfile(&arguments.readfile);
     let contents = parser::read_file(&arguments.readfile);
-    parser::parse("$background: white;".to_string());
+    parser::parse(contents);
     // let mut selector_sequence: Vec<String> = Vec::new();
     // let blocks = parser::break_blocks(contents);
 

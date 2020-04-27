@@ -1,86 +1,6 @@
 use regex::Regex;
 use std::fs::File;
 use std::io::prelude::*;
-use std::io::BufReader;
-
-// pub fn read_file(file: String) -> String {
-// 	let mut result = String::new().to_owned();
-// 	let mut file = File::open(file).expect("Can't open file");
-// 	let mut contents = String::new();
-// 	file.read_to_string(&mut contents).expect("Can't read file");
-
-// 	let re = Regex::new(r".+\n?\s?\{(\n?\t?.+: .+\n)+}").unwrap();
-
-// 	for block in re.captures_iter(&contents){
-// 		let new_text: String = block[0].replace("\t", "").to_string();
-// 		result.push_str(&new_text);
-// 		result.push_str("\n");
-// 	}
-// 	return result;
-// }
-
-// pub fn break_blocks(block: String) -> Vec<String> {
-// 	let items: Vec<&str> = block.split("}").collect();
-// 	let items: Vec<&str> = items[..(items.len() -1)].to_vec();
-// 	let mut blocks: Vec<String> = Vec::new();
-// 	for item in &items {
-// 		let mut item: String = item.to_string();
-// 		item.push('}');
-// 		blocks.push(item)
-// 	}
-// 	return blocks;
-// }
-
-// pub fn strip_newlines(block: &mut String) {
-// 	*block = block.replace("\n", "");
-// }
-
-// pub fn break_tokens(block: &mut String) -> (&str, &str) {
-// 	let place = block.find("{");
-// 	match place {
-// 		Some(p) => {
-// 			if block.chars().nth(p - 1).unwrap() == ' ' {
-// 				block.remove(p - 1);
-// 			};
-// 		},
-// 		None => (),
-// 	};
-// 	let place = block.find("{");
-// 	let tokens = block.split_at(place.unwrap());
-	
-// 	return tokens;
-// }
-
-// pub fn format_property(block: String) -> (Vec<String>, Vec<String>) {
-// 	let block: String = block[1..block.len() -1].to_string();
-// 	let key_value_pair: Vec<&str> = block.split(";").collect();
-// 	let key_value_pair = key_value_pair[..(key_value_pair.len() -1)].to_vec();
-// 	let mut keys: Vec<String> = Vec::new();
-// 	let mut values: Vec<String> = Vec::new();
-	
-// 	for item in key_value_pair {
-// 		let key_value: Vec<&str> = item.split(":").collect();
-// 		keys.push(key_value[0].to_string())	;
-// 		values.push(key_value[1].to_string());
-
-// 		for v in &mut values {
-// 			if v.chars().nth(0).unwrap() == ' '{
-// 				v.remove(0);
-// 			};}
-// 	}
-
-// 	return (keys, values)
-// }
-
-enum Declarations{
-	Variable
-}
-
-struct Line {
-	key: String,
-	value: String,
-	ltype: Declarations
-}
 
 pub fn read_file(file: &String) -> String{
 	let mut result = String::new().to_owned();
@@ -92,17 +12,18 @@ pub fn read_file(file: &String) -> String{
 }
 
 pub fn parse(contents: String){
-	let patterns: [Regex; 1] = [
-		Regex::new(r"^\$\w+\d* *\t*: *\t*[\w\d\(\) \t!]*;$").unwrap()
+	parsed_string: String = String::new();
+	let patterns: Vec<Regex> = vec![
+		Regex::new(r"\$([\w\d_-]*) *\t*: *\t*([\w\d\(\) \t!,(//)]*);").unwrap(),
+		Regex::new(r"//(.*)").unwrap(),
+		Regex::new(r"([\w\- \.:\d]*) *\t*\{").unwrap(),
+		Regex::new(r"\s*\t*([\w\d \-]*) *\t*: ([\w\d\(\) \t!,(//)]*);").unwrap(),
+		Regex::new(r"\}").unwrap(),
+		Regex::new(r"@\w+([\w\-\d \(\):]*) *\t*\{").unwrap(),
 	];
 
-	for pattern in &patterns{
-		if pattern.is_match(contents.as_str()){
-			println!("{}", contents);
-		}
+	for (line) in contents.lines(){
+		for pattern in &patterns{
+			if pattern.is_match(line) {); break;};}
 	}
-	let linetype = Line{
-		key: "background".to_string(), 
-		value: "white".to_string(),
-		ltype: Declarations::Variable};
 }
