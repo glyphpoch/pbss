@@ -12,7 +12,7 @@ pub fn read_file(file: &String) -> String{
 }
 
 pub fn parse(contents: String){
-	parsed_string: String = String::new();
+	let parsed_string: String = String::new();
 	let patterns: Vec<Regex> = vec![
 		Regex::new(r"\$([\w\d_-]*) *\t*: *\t*([\w\d\(\) \t!,(//)]*);").unwrap(),
 		Regex::new(r"//(.*)").unwrap(),
@@ -24,6 +24,6 @@ pub fn parse(contents: String){
 
 	for (line) in contents.lines(){
 		for pattern in &patterns{
-			if pattern.is_match(line) {); break;};}
+			if pattern.is_match(line) {; break;};}
 	}
 }
