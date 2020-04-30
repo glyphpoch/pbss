@@ -30,7 +30,7 @@ pub fn strip_empty_lines(string: String) -> String{
 	return raw_string;
 }
 
-pub fn track_variables(string: String)-> (HashMap<String, String>, String)
+pub fn track_vars(string: String)-> (HashMap<String, String>, String)
  {
 	let variable = Regex::new(r"\$(\w+[\w\d_\-]*) *\t*: *\t*([\d\w_\-\(\),]*);")
 		.unwrap();
@@ -43,16 +43,32 @@ pub fn track_variables(string: String)-> (HashMap<String, String>, String)
 	return (variable_index, string);
 }
 
-pub fn find_atrules(string: String) {
-	let at_rule = Regex::new(r"@([\w\d\-_+>,#.\[\]: \(\)]*)\s*\t*\n*\{( *\n*\t*)+").unwrap();
+pub fn find_atrules(string: String) -> (Vec<String>, String){
+	let at_rule = Regex::new(r"@([\w\d\-,: \(\)]*)\s*\t*\n*\{( *\n*\t*([\w\d\-_+>,#.\[\]:]*)\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_]*;)+\n* *\t*})\n*\t* *}").unwrap();
+	let mut queries: Vec<String> = Vec::new();
+
 	for cap in at_rule.captures_iter(string.as_str()){
-		println!("{}", cap[0].to_string());
+		queries.push(cap[0].to_string());
 	}
+	let string = at_rule.replace(string.as_str(), "").to_string();
+	let string = strip_empty_lines(string);
+	return (queries, string)
 }
 
-pub fn find_blocks(string: String){
-	let block = Regex::new(r"([\w\d\-_+>,#.\[\]:]*)\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_]*;)+\n* *\t*}").unwrap();
+pub fn find_blocks(string: String) -> Vec<String> {
+	let block = Regex::new(r"([\w\d\-_+>,#.\[\]:]*)\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_$]*;)+\n* *\t*}").unwrap();
+	let mut blocks: Vec<String> = Vec::new();
 	for cap in block.captures_iter(string.as_str()){
-		println!("{}", cap[0].to_string());
+		blocks.push(cap[0].to_string());
+	}
+	return blocks;
+}
+
+pub fn resolve_blocks(block: &str, var_index: &HashMap<String, String>) 
+{
+	let var = Regex::new(r"\$(\w+[\w\d_\-]*)").unwrap();
+	let compiled_block = String::new();
+	for cap in var.captures_iter(block){
+		
 	}
 }

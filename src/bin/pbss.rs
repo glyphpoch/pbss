@@ -8,7 +8,7 @@ struct Arguments {
 }
 
 impl Arguments {
-	fn new() -> Arguments {
+	fn read() -> Arguments {
 		let flags: Vec<String> = args().collect();
 		let flags = &flags[1..];
 		let arguments = Arguments {
@@ -18,15 +18,18 @@ impl Arguments {
 	arguments
 }}
 
-fn main() {
-	let arguments: Arguments = Arguments::new();
-    let mut style_map: HashMap<String, HashMap<String, String> > = HashMap::new();
-
-	file_handling::check_readfile(&arguments.readfile);
-    let contents = parser::read_file(&arguments.readfile);
+fn compile(readfile: &String) {
+    let contents = parser::read_file(readfile);
     let uncomment_string =  parser::strip_comments(contents);
     let raw_string = parser::strip_empty_lines(uncomment_string);
-    let (var_index, no_var_str) = parser::track_variables(raw_string);
-    parser::find_atrules(no_var_str);
-    // parser::find_blocks(no_var_str);
+    let (var_index, no_var_str) = parser::track_vars(raw_string);
+    let (at_rules, no_at_query_str) = parser::find_atrules(no_var_str);
+    let blocks = parser::find_blocks(no_at_query_str);
+    parser::resolve_blocks(blocks[0].as_str(), &var_index);
+}
+
+fn main() {
+	let arguments: Arguments = Arguments::read();
+	file_handling::check_readfile(&arguments.readfile);
+    compile(&arguments.readfile);
 }
