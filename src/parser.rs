@@ -1,8 +1,7 @@
 use std::fs::File;
 use std::io::prelude::*;
 use regex::Regex;
-// use crate::util::{Pattern,Line,LineType};
-// use crate::actions::*;
+use std::collections::HashMap;
 
 pub fn read_file(file: &String) -> String{
 	let mut file = File::open(file).expect("Can't open file");
@@ -18,8 +17,8 @@ pub fn strip_comments(contents: String) -> String{
 	return text.to_string()
 }
 
-pub fn strip_empty_lines(string: String) {
-	let newline = Regex::new(r"^\n+$").unwrap();
+pub fn strip_empty_lines(string: String) -> String{
+	let newline = Regex::new(r"^ *\n*$").unwrap();
 	let mut raw_string = String::new();
 	for mut line in string.lines(){
 		let edit_line = &newline.replace_all(line, "");
@@ -28,29 +27,32 @@ pub fn strip_empty_lines(string: String) {
 			raw_string.push_str("\n");
 		}
 	}
-	println!("{}", raw_string);
+	return raw_string;
 }
 
-// pub fn classify(contents: &str, patterns: &Vec<Pattern>) -> Option<Line>{
-// 	let mut passed: Vec<LineType> = Vec::new();
-// 	for pattern in patterns{
-// 		if pattern.expression.is_match(contents) {
-// 			passed.push(pattern.ptype)
-// 		}
-// 	}
-// 	if passed.len() > 0{
-// 		return Some(Line { line: contents.to_string(), ltype: passed })
-// 	}
-// 	return None
-// }
+pub fn track_variables(string: String)-> (HashMap<String, String>, String)
+ {
+	let variable = Regex::new(r"\$(\w+[\w\d_\-]*) *\t*: *\t*([\d\w_\-\(\),]*);")
+		.unwrap();
+	let mut variable_index: HashMap<String, String> = HashMap::new();
+	for cap in variable.captures_iter(string.as_str()){
+		variable_index.insert(cap[1].to_string(), cap[2].to_string());
+	}
+	let string = variable.replace_all(string.as_str(), "").to_string();
+	let string = strip_empty_lines(string);
+	return (variable_index, string);
+}
 
-// pub fn line_action(line: Line, patterns: &Vec<Pattern>){
-// 	let mut gen_line = String::new();
-// 	for pass in line.ltype {
-// 		match pass {
-// 			LineType::Style => gen_line.push_str(act_variable(&line.line, &patterns[2])),
-// 			LineType::Comment => gen_line.push_str(act_comment(&line.line, &patterns[5])),
-// 			_ => {},
-// 		}
-// 	}
-// }
+pub fn find_atrules(string: String) {
+	let at_rule = Regex::new(r"@([\w\d\-_+>,#.\[\]: \(\)]*)\s*\t*\n*\{( *\n*\t*)+").unwrap();
+	for cap in at_rule.captures_iter(string.as_str()){
+		println!("{}", cap[0].to_string());
+	}
+}
+
+pub fn find_blocks(string: String){
+	let block = Regex::new(r"([\w\d\-_+>,#.\[\]:]*)\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_]*;)+\n* *\t*}").unwrap();
+	for cap in block.captures_iter(string.as_str()){
+		println!("{}", cap[0].to_string());
+	}
+}

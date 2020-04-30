@@ -1,6 +1,6 @@
 use std::env::args;
 use std::collections::HashMap;
-use pbss::{parser,file_handling,util};
+use pbss::{parser,file_handling};
 
 struct Arguments {
 	readfile: String,
@@ -25,14 +25,8 @@ fn main() {
 	file_handling::check_readfile(&arguments.readfile);
     let contents = parser::read_file(&arguments.readfile);
     let uncomment_string =  parser::strip_comments(contents);
-    parser::strip_empty_lines(uncomment_string)
-
-    // println!("{}", contents);
-    // let basic_patterns = util::Pattern::base();
-    // for line in contents.lines(){
-    //     let classed_line = parser::classify(line, &basic_patterns);
-    //     match classed_line {
-    //         Some(l) => parser::line_action(l, &basic_patterns),
-    //         None => {}
-    //     }
+    let raw_string = parser::strip_empty_lines(uncomment_string);
+    let (var_index, no_var_str) = parser::track_variables(raw_string);
+    parser::find_atrules(no_var_str);
+    // parser::find_blocks(no_var_str);
 }
