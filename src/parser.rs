@@ -64,11 +64,21 @@ pub fn find_blocks(string: String) -> Vec<String> {
 	return blocks;
 }
 
-pub fn resolve_blocks(block: &str, var_index: &HashMap<String, String>) 
-{
+pub fn resolve_block(block: String, var_index: &HashMap<String, String>) 
+-> String {
 	let var = Regex::new(r"\$(\w+[\w\d_\-]*)").unwrap();
-	let compiled_block = String::new();
-	for cap in var.captures_iter(block){
-		
+	let mut compiled_block = String::new();
+	for mut line in block.lines(){
+		if var.is_match(line) {
+			for cap in var.captures_iter(line){
+				let line = &line.replace(&cap[0], &var_index[&cap[1]]);
+				compiled_block.push_str(line.as_str());
+				compiled_block.push_str("\n");
+			}
+		} else {
+			compiled_block.push_str(line);
+			compiled_block.push_str("\n");
+		}
 	}
+	return compiled_block;
 }

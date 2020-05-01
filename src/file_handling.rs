@@ -1,9 +1,8 @@
 use std::io::prelude::*;
-use std::fs::File;
-use std::collections::HashMap;
 use std::path::Path;
 use std::process;
 use std::io::{stdin,stdout};
+use std::fs::File;
 
 pub fn check_readfile(path: &String) {
 	if ! Path::new(path).exists() {
@@ -12,26 +11,10 @@ pub fn check_readfile(path: &String) {
 	}
 }
 
-pub fn writer(map: HashMap<String, HashMap<String, String>>, sequence: Vec<String>) -> String{
-
-	let mut block = String::new();
-
-	for item in sequence.iter(){
-		block.push_str(format!("{} {{\n", item).as_str());
-		for (prop, val) in map[item].keys().zip(map[item].values()){
-			block.push_str(format!("    {}: {};\n", prop, val).as_str());
-		}
-		block.push_str("}\n");
-	}
-
-	return block;
-}
-
-pub fn write_blocks(blocks: String, output: String){
+pub fn writer(blocks: String, output: String){
 	if output == ":s" {
 		println!("{}", blocks);
 	} else {
-		check_writefile(&output);
 		let mut file = File::create(output).expect("Can't create file");
 		file.write_all(blocks.as_bytes()).expect("Can't write file");
 	}
@@ -39,12 +22,15 @@ pub fn write_blocks(blocks: String, output: String){
 
 pub fn check_writefile(path: &String){
 	if Path::new(path).exists(){
-		print!("It seems {} exists in file system. Overrite the file [Y/n] ", path);
+		print!("It seems '{}' exists in file system. Override the file [Y/n] ", path);
 		stdout().flush();
 		let mut ans = String::new();
 		stdin().read_line(&mut ans).expect("Unable to read input");
+		let ans = ans.trim();
 
-		if ! (ans == "" || ans == "Y" || ans == "y"){
+		if ! (ans == "".to_string() || ans == "Y".to_string() || ans == "y".to_string()){
+			println!("Ovrride cancelled");
+			println!("Got result {}", ans);
 			process::exit(2);
 		}
 	}
