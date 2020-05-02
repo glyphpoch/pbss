@@ -18,7 +18,7 @@ impl Arguments {
 	arguments
 }}
 
-pub fn compile(readfile: &String, writefile: &String) {
+pub fn compile(readfile: &String, writefile: &String) -> String {
     let contents = parser::read_file(readfile);
     let uncomment_string =  parser::strip_comments(contents);
     let raw_string = parser::strip_empty_lines(uncomment_string);
@@ -30,5 +30,5 @@ pub fn compile(readfile: &String, writefile: &String) {
         out_conts.push_str(parser::resolve_block(block, &var_index)
             .as_str())
     }
-    file_handling::writer(out_conts, writefile.to_string())
+    return out_conts;
 }
