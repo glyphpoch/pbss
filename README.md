@@ -8,6 +8,7 @@ It is very easy to get started with Pbss. First download the latest stable execu
 * Put the executable in a place that you like. For example C:\Users\\[YOUR-USERNAME]\pbss.
 * Now open the start menu and type *env* in your search bar and clicking on PATH.
 * Now add the the path to the folder where you stored the binary by adding a colon(:) and then putting the path to the directory
+
 **You may put the executable in a place that is already in the $PATH variable, but that may require administrative privileges**
 
 ## Linux/UNIX
@@ -20,7 +21,7 @@ It is very easy to get started with Pbss. First download the latest stable execu
 * This adds your home directory's bin folder to a variable called $PATH which is read by shells for getting program names. If you chose to use another directory, replace the contents after the color(:) with your own directory path
 
 ## MacOS X
-For MacOS X, the steps are similar to Linux/UNIX
+Pbss's versions which are 1.2 onwards are not fully MacOS compatible. Therefore we recommend you to compile this from the source
 
 ## Building From source
 In order to build Pbss from source, make sure that you have fulfilled these requirements:-
@@ -42,6 +43,12 @@ In order to build Pbss from source, make sure that you have fulfilled these requ
 ```
 
 * Now open the target folder. Inside it you will see the release folder. Now move the executable *pbss* depending on the steps of your OS defined above.
+
+# The Move From Python to Rust
+Pbss was initially written in Python but since version 1.it is being completely rewritten in the Rust language due to its grater efficiency and robustness. The move is still not complete although it is expected to be completed by the next major release. A few reasons for this move are
+* Rust is a compiled language which is helpful since it generates machine code making the distribution easier
+* Rust does not require a native runtime to be installed
+* Since it has a strong type checking, it provides a greater speed over Python
 
 ## Licensing and Price
 Pbss is completely free for personal, educational and commercial use and is Licensed under the open-source MIT License. It is completely open-source and will always be free for use. Users are free to share, change and use Pbss in anyway they like
