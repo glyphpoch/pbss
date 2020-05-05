@@ -44,7 +44,7 @@ pub fn track_vars(string: String)-> (HashMap<String, String>, String)
 }
 
 pub fn find_atrules(string: String) -> (Vec<String>, String){
-	let at_rule = Regex::new(r"@([\w\d\-,: \(\)]*)\s*\t*\n*\{( *\n*\t*([\w\d\-_+>,#.\[\]:]*)\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_]*;)+\n* *\t*})\n*\t* *}").unwrap();
+	let at_rule = Regex::new(r"@([\w\d\-,: \(\)]*)\s*\t*\n*\{\n*\t* *[\w\d\-_+>,#.\[\]:]*\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_$]*;)+\n* *\t*}\n*\s*\t*}").unwrap();
 	let mut queries: Vec<String> = Vec::new();
 
 	for cap in at_rule.captures_iter(string.as_str()){

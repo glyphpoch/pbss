@@ -27,8 +27,10 @@ pub fn compile(readfile: &String, writefile: &String) -> String {
     let blocks = parser::find_blocks(no_at_query_str);
     let mut out_conts = String::new();
     for block in blocks {
-        out_conts.push_str(parser::resolve_block(block, &var_index)
-            .as_str())
+        out_conts.push_str(&parser::resolve_block(block, &var_index))
+    }
+    for at_rule in at_rules {
+        out_conts.push_str(&parser::resolve_block(at_rule, &var_index))
     }
     return out_conts;
 }

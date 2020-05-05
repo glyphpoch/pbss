@@ -3,3 +3,11 @@ div {
 	background: rgb(20,20,20);
 }
 section { height: 10px; }
+@media only screen and (max-width: 500px) {
+	div {
+		color: blue;
+		background: green;
+		border-bottom: rgb(20,20,20);
+	}
+}
+
