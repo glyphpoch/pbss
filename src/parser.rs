@@ -1,72 +1,84 @@
-use regex::Regex;
 use std::fs::File;
 use std::io::prelude::*;
+use regex::Regex;
+use std::collections::HashMap;
 
-pub fn read_file(file: String) -> String {
-	let mut result = String::new().to_owned();
+pub fn read_file(file: &String) -> String{
 	let mut file = File::open(file).expect("Can't open file");
 	let mut contents = String::new();
 	file.read_to_string(&mut contents).expect("Can't read file");
 
-	let re = Regex::new(r".+\n?\s?\{(\n?\t?.+: .+\n)+}").unwrap();
-
-	for block in re.captures_iter(&contents){
-		let new_text: String = block[0].replace("\t", "").to_string();
-		result.push_str(&new_text);
-		result.push_str("\n");
-	}
-	return result;
+	return contents;
 }
 
-pub fn break_blocks(block: String) -> Vec<String> {
-	let items: Vec<&str> = block.split("}").collect();
-	let items: Vec<&str> = items[..(items.len() -1)].to_vec();
+pub fn strip_comments(contents: String) -> String{
+	let comment = Regex::new(r#"/\*[\d\w \n\t!@#$%^&*\(\)_\-\+=~`|\\\{\}\[\]'":;<>,./?]*\\*/"#).unwrap();
+	let text = comment.replace_all(&contents, "");
+	return text.to_string()
+}
+
+pub fn strip_empty_lines(string: String) -> String{
+	let newline = Regex::new(r"^ *\n*$").unwrap();
+	let mut raw_string = String::new();
+	for mut line in string.lines(){
+		let edit_line = &newline.replace_all(line, "");
+		if ! edit_line.is_empty() {
+			raw_string.push_str(edit_line);
+			raw_string.push_str("\n");
+		}
+	}
+	return raw_string;
+}
+
+pub fn track_vars(string: String)-> (HashMap<String, String>, String)
+ {
+	let variable = Regex::new(r"\$(\w+[\w\d_\-]*) *\t*: *\t*([\d\w_\-\(\),]*);")
+		.unwrap();
+	let mut variable_index: HashMap<String, String> = HashMap::new();
+	for cap in variable.captures_iter(string.as_str()){
+		variable_index.insert(cap[1].to_string(), cap[2].to_string());
+	}
+	let string = variable.replace_all(string.as_str(), "").to_string();
+	let string = strip_empty_lines(string);
+	return (variable_index, string);
+}
+
+pub fn find_atrules(string: String) -> (Vec<String>, String){
+	let at_rule = Regex::new(r"@([\w\d\-,: \(\)]*)\s*\t*\n*\{\n*\t* *[\w\d\-_+>,#.\[\]:]*\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_$]*;)+\n* *\t*}\n*\s*\t*}").unwrap();
+	let mut queries: Vec<String> = Vec::new();
+
+	for cap in at_rule.captures_iter(string.as_str()){
+		queries.push(cap[0].to_string());
+	}
+	let string = at_rule.replace(string.as_str(), "").to_string();
+	let string = strip_empty_lines(string);
+	return (queries, string)
+}
+
+pub fn find_blocks(string: String) -> Vec<String> {
+	let block = Regex::new(r"([\w\d\-_+>,#.\[\]:]*)\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_$]*;)+\n* *\t*}").unwrap();
 	let mut blocks: Vec<String> = Vec::new();
-	for item in &items {
-		let mut item: String = item.to_string();
-		item.push('}');
-		blocks.push(item)
+	for cap in block.captures_iter(string.as_str()){
+		blocks.push(cap[0].to_string());
 	}
 	return blocks;
 }
 
-pub fn strip_newlines(block: &mut String) {
-	*block = block.replace("\n", "");
-}
-
-pub fn break_tokens(block: &mut String) -> (&str, &str) {
-	let place = block.find("{");
-	match place {
-		Some(p) => {
-			if block.chars().nth(p - 1).unwrap() == ' ' {
-				block.remove(p - 1);
-			};
-		},
-		None => (),
-	};
-	let place = block.find("{");
-	let tokens = block.split_at(place.unwrap());
-	
-	return tokens;
-}
-
-pub fn format_property(block: String) -> (Vec<String>, Vec<String>) {
-	let block: String = block[1..block.len() -1].to_string();
-	let key_value_pair: Vec<&str> = block.split(";").collect();
-	let key_value_pair = key_value_pair[..(key_value_pair.len() -1)].to_vec();
-	let mut keys: Vec<String> = Vec::new();
-	let mut values: Vec<String> = Vec::new();
-	
-	for item in key_value_pair {
-		let key_value: Vec<&str> = item.split(":").collect();
-		keys.push(key_value[0].to_string())	;
-		values.push(key_value[1].to_string());
-
-		for v in &mut values {
-			if v.chars().nth(0).unwrap() == ' '{
-				v.remove(0);
-			};}
+pub fn resolve_block(block: String, var_index: &HashMap<String, String>) 
+-> String {
+	let var = Regex::new(r"\$(\w+[\w\d_\-]*)").unwrap();
+	let mut compiled_block = String::new();
+	for mut line in block.lines(){
+		if var.is_match(line) {
+			for cap in var.captures_iter(line){
+				let line = &line.replace(&cap[0], &var_index[&cap[1]]);
+				compiled_block.push_str(line.as_str());
+				compiled_block.push_str("\n");
+			}
+		} else {
+			compiled_block.push_str(line);
+			compiled_block.push_str("\n");
+		}
 	}
-
-	return (keys, values)
+	return compiled_block;
 }

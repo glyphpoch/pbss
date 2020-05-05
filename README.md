@@ -1,11 +1,54 @@
 # Pbss: Practically Better Style Sheets
-Pbss is an attempt to bring Python to CSS. Pbss compiles Python code to CSS. So you get the features of Python and you don't deal with CSS as the code is converted to CSS by Pbss.
+Pbss is an attempt to improve on the Cascading Stylesheet Language by adding easier support for variables, arithmetic and providing additional features such as macros, functions and more. Plus it is a sort of linter that prevents your stylesheet from not working due to a tiny letter you typed by mistake
 
-# Getting Started With Pbss
-To install and getting started with Pbss, read the docs at [Docs](https://pbss.readthedocs.io/en/dev/)
+# Getting started with Pbss
+It is very easy to get started with Pbss. First download the latest stable executable for your platform from the Pbss's release page. Usually they do have a version number such as Pbss-[major-version].0. Now follow these instructions for your Operating System.
 
-## Why Use Pbss over other programs like Sass/Less etc
-Everyone knows that Python is easy and has tonnes of features. All of those features can be used in the root dictionary. Pbss supports nesting of elements (See docs), color arithmetic, supports CSS units natively intelligently detects whether its a pseudo-selector like _:hover_ and it supports continuous watching of file and compiling. Moreover Pbss supports many tools so that you don't have to put them as strings. For example all CSS units are natively supported in Pbss.
+## Microsoft Windows
+* Put the executable in a place that you like. For example C:\Users\\[YOUR-USERNAME]\pbss.
+* Now open the start menu and type *env* in your search bar and clicking on PATH.
+* Now add the the path to the folder where you stored the binary by adding a colon(:) and then putting the path to the directory
+
+**You may put the executable in a place that is already in the $PATH variable, but that may require administrative privileges**
+
+## Linux/UNIX
+* Put the executable in a place you like. Most Linux/UNIX users pu binaries in a folder in their home directory named *bin*. But you can use anything
+* Now in most Linux distributions like Ubuntu, this should show allow you to run Pbss, but if it doesn't add this line to any of your profile files, like .profile, .bashrc, .bash_profile, .zshrc, .zsh_profile
+
+```
+	export PATH="$PATH:$HOME/bin/"
+```
+* This adds your home directory's bin folder to a variable called $PATH which is read by shells for getting program names. If you chose to use another directory, replace the contents after the color(:) with your own directory path
+
+## MacOS X
+Pbss's versions which are 1.2 onwards are not fully MacOS compatible. Therefore we recommend you to compile this from the source
+
+## Building From source
+In order to build Pbss from source, make sure that you have fulfilled these requirements:-
+
+* Rust and Cargo >= 1.43.0
+* A linker, usually a C based compiler will fulfill this
+* Git
+
+* Clone the master branch using this command
+
+```
+	git clone https://arijit79/pbss.git
+```
+
+* Now run this command
+
+```
+	cargo build --release
+```
+
+* Now open the target folder. Inside it you will see the release folder. Now move the executable *pbss* depending on the steps of your OS defined above.
+
+# The Move From Python to Rust
+Pbss was initially written in Python but since version 1.it is being completely rewritten in the Rust language due to its grater efficiency and robustness. The move is still not complete although it is expected to be completed by the next major release. A few reasons for this move are
+* Rust is a compiled language which is helpful since it generates machine code making the distribution easier
+* Rust does not require a native runtime to be installed
+* Since it has a strong type checking, it provides a greater speed over Python
 
 ## Licensing and Price
 Pbss is completely free for personal, educational and commercial use and is Licensed under the open-source MIT License. It is completely open-source and will always be free for use. Users are free to share, change and use Pbss in anyway they like

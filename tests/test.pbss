@@ -1,0 +1,30 @@
+$background: rgb(20,20,20);
+$accent_color:  rgb(0,200,0);
+$font-color1:  white; /* main font color */
+
+/* Comment */
+
+/* This
+is
+a
+comment
+on
+multiple
+lines */
+
+Invalid Line
+
+div {
+	color: $accent_color;
+	background: $background;
+}
+
+@media only screen and (max-width: 500px) {
+	div {
+		color: blue;
+		background: green;
+		border-bottom: $background;
+	}
+}
+
+section { height: 10px; }
