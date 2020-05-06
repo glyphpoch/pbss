@@ -3,6 +3,7 @@ use std::path::Path;
 use std::process;
 use std::io::{stdin,stdout};
 use std::fs::File;
+use crate::Arguments;
 
 pub fn check_readfile(path: &String) {
 	if ! Path::new(path).exists() {
@@ -11,12 +12,14 @@ pub fn check_readfile(path: &String) {
 	}
 }
 
-pub fn writer(blocks: String, output: String){
+pub fn writer(contents: String, arguments: &Arguments){
+	let output = &arguments.writefile;
 	if output == ":s" {
-		println!("{}", blocks);
+		println!("{}", contents);
 	} else {
-		let mut file = File::create(output).expect("Can't create file");
-		file.write_all(blocks.as_bytes()).expect("Can't write file");
+		let mut file = File::create(&output).expect("Can't create file");
+		file.write_all(contents.as_bytes()).expect("Can't write file");
+		println!("Compiled {} and wrote to {}", arguments.readfile, output);
 	}
 }
 

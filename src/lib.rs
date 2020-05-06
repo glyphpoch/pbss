@@ -3,22 +3,34 @@ use std::env::args;
 pub mod file_handling;
 
 pub struct Arguments {
+    pub quiet_mode: bool,
 	pub readfile: String,
 	pub writefile: String,
 }
 
 impl Arguments {
-	pub fn read() -> Arguments {
-		let flags: Vec<String> = args().collect();
-		let flags = &flags[1..];
-		let arguments = Arguments {
-			readfile: flags[0].to_string(),
-			writefile: flags[1].to_string()
-	};
-	arguments
+    pub fn read() -> Arguments{
+    let flags: Vec<String> = args().collect();
+    let flags = &flags[1..];
+    if flags.len() < 2{
+        eprintln!("Error number of arguments");
+        std::process::exit(2);
+    }
+    let read_file = (&flags[flags.len() - 2]).to_string();
+    let write_file = (&flags[flags.len() -1]).to_string();
+    let mut quiet_mode = false;
+
+    if flags.contains(&"-q".to_string()) || flags.contains(&"--quiet"
+        .to_string()){
+        quiet_mode = true;
+    }
+
+    Arguments {
+        quiet_mode: quiet_mode, readfile: read_file, writefile: write_file
+    }
 }}
 
-pub fn compile(readfile: &String, writefile: &String) -> String {
+pub fn compile(readfile: &String) -> String {
     let contents = parser::read_file(readfile);
     let uncomment_string =  parser::strip_comments(contents);
     let raw_string = parser::strip_empty_lines(uncomment_string);
