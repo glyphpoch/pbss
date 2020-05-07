@@ -20,9 +20,12 @@ impl Arguments {
     let write_file = (&flags[flags.len() -1]).to_string();
     let mut quiet_mode = false;
 
-    if flags.contains(&"-q".to_string()) || flags.contains(&"--quiet"
-        .to_string()){
+    if flags.contains(&"-q".to_string()) || flags.contains(&"--quiet".to_string()){
         quiet_mode = true;
+    }
+    if quiet_mode == true && write_file == ":s".to_string() {
+        eprintln!("Request to redirect to stdout given along with quiet flag");
+        std::process::exit(2);
     }
 
     Arguments {
@@ -32,12 +35,14 @@ impl Arguments {
 
 pub fn compile(readfile: &String) -> String {
     let contents = parser::read_file(readfile);
+    
     let uncomment_string =  parser::strip_comments(contents);
     let raw_string = parser::strip_empty_lines(uncomment_string);
     let (var_index, no_var_str) = parser::track_vars(raw_string);
     let (at_rules, no_at_query_str) = parser::find_atrules(no_var_str);
     let blocks = parser::find_blocks(no_at_query_str);
     let mut out_conts = String::new();
+
     for block in blocks {
         out_conts.push_str(&parser::resolve_block(block, &var_index))
     }
