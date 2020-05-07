@@ -19,7 +19,10 @@ pub fn writer(contents: String, arguments: &Arguments){
 	} else {
 		let mut file = File::create(&output).expect("Can't create file");
 		file.write_all(contents.as_bytes()).expect("Can't write file");
-		println!("Compiled {} and wrote to {}", arguments.readfile, output);
+		if ! arguments.quiet_mode == true
+		{
+			println!("Compiled {} and wrote to {}", arguments.readfile, output);
+		}
 	}
 }
 

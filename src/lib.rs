@@ -2,8 +2,11 @@ pub mod parser;
 use std::env::args;
 pub mod file_handling;
 
+static PBSS_VERSION: &str = "Pbss-1.3 snap";
+
 pub struct Arguments {
     pub quiet_mode: bool,
+    pub watch_mode: bool,
 	pub readfile: String,
 	pub writefile: String,
 }
@@ -12,6 +15,12 @@ impl Arguments {
     pub fn read() -> Arguments{
     let flags: Vec<String> = args().collect();
     let flags = &flags[1..];
+
+    if flags.contains(&"-v".to_string()) || flags.contains(&"--version".to_string()){
+        println!("{}", PBSS_VERSION);
+        std::process::exit(0);
+    }
+
     if flags.len() < 2{
         eprintln!("Error number of arguments");
         std::process::exit(2);
@@ -29,13 +38,12 @@ impl Arguments {
     }
 
     Arguments {
-        quiet_mode: quiet_mode, readfile: read_file, writefile: write_file
-    }
+        quiet_mode: quiet_mode, readfile: read_file, writefile: write_file, watch_mode: false}
 }}
 
 pub fn compile(readfile: &String) -> String {
     let contents = parser::read_file(readfile);
-    
+
     let uncomment_string =  parser::strip_comments(contents);
     let raw_string = parser::strip_empty_lines(uncomment_string);
     let (var_index, no_var_str) = parser::track_vars(raw_string);
