@@ -3,6 +3,7 @@ use std::env::args;
 pub mod file_handling;
 use std::fs::metadata;
 use filetime::FileTime;
+pub mod file_include;
 
 static PBSS_VERSION: &str = "Pbss-1.3 snap";
 
@@ -49,7 +50,8 @@ impl Arguments {
 }}
 
 pub fn compile(readfile: &String) -> String {
-    let contents = parser::read_file(readfile);
+    let mut contents = parser::read_file(readfile);
+    let contents = file_include::check_includes(&mut contents);
 
     let uncomment_string =  parser::strip_comments(contents);
     let raw_string = parser::strip_empty_lines(uncomment_string);

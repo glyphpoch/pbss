@@ -28,3 +28,4 @@ div {
 }
 
 section { height: 10px; }
+include(tests/test2.pbss);
