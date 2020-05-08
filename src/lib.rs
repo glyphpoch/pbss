@@ -1,6 +1,8 @@
 pub mod parser;
 use std::env::args;
 pub mod file_handling;
+use std::fs::metadata;
+use filetime::FileTime;
 
 static PBSS_VERSION: &str = "Pbss-1.3 snap";
 
@@ -38,7 +40,7 @@ impl Arguments {
     }
 
     Arguments {
-        quiet_mode: quiet_mode, readfile: read_file, writefile: write_file, watch_mode: false}
+        quiet_mode: quiet_mode, readfile: read_file, writefile: write_file, watch_mode: true}
 }}
 
 pub fn compile(readfile: &String) -> String {
@@ -58,4 +60,10 @@ pub fn compile(readfile: &String) -> String {
         out_conts.push_str(&parser::resolve_block(at_rule, &var_index))
     }
     return out_conts;
+}
+
+pub fn get_file_mod_time(file: &String) -> i64 {
+    let file_meta = metadata(file).expect("Can't get file metadata");
+    let last_mod_time = FileTime::from_last_modification_time(&file_meta).seconds();
+    last_mod_time
 }
