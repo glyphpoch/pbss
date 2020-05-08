@@ -51,10 +51,9 @@ impl Arguments {
 
 pub fn compile(readfile: &String) -> String {
     let mut contents = parser::read_file(readfile);
-    let contents = file_include::check_includes(&mut contents);
-
-    let uncomment_string =  parser::strip_comments(contents);
-    let raw_string = parser::strip_empty_lines(uncomment_string);
+    let uncomment_string = parser::strip_comments(contents);
+    let mut raw_string = parser::strip_empty_lines(uncomment_string);
+    file_include::check_includes(&mut raw_string);
     let (var_index, no_var_str) = parser::track_vars(raw_string);
     let (at_rules, no_at_query_str) = parser::find_atrules(no_var_str);
     let blocks = parser::find_blocks(no_at_query_str);

@@ -28,4 +28,7 @@ div {
 }
 
 section { height: 10px; }
+
+/* including another file with include(tests/test2.pbss) */
+
 include(tests/test2.pbss);

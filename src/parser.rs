@@ -12,7 +12,7 @@ pub fn read_file(file: &String) -> String{
 }
 
 pub fn strip_comments(contents: String) -> String{
-	let comment = Regex::new(r#"/\*[\d\w \n\t!@#$%^&*\(\)_\-\+=~`|\\\{\}\[\]'":;<>,./?]*\\*/"#).unwrap();
+	let comment = Regex::new(r#"/\*[\d\w \n\t!@#$%^&*\(\)_\-\+=~`|\\\[\]'":;<>,./?]*\*/"#).unwrap();
 	let text = comment.replace_all(&contents, "");
 	return text.to_string()
 }
