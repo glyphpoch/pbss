@@ -29,7 +29,7 @@ pub fn writer(contents: String, arguments: &Arguments){
 pub fn check_writefile(path: &String){
 	if Path::new(path).exists(){
 		print!("It seems '{}' exists in file system. Override the file [Y/n] ", path);
-		stdout().flush();
+		let _ = stdout().flush();
 		let mut ans = String::new();
 		stdin().read_line(&mut ans).expect("Unable to read input");
 		let ans = ans.trim();

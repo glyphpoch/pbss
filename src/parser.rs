@@ -20,7 +20,7 @@ pub fn strip_comments(contents: String) -> String{
 pub fn strip_empty_lines(string: String) -> String{
 	let newline = Regex::new(r"^ *\n*$").unwrap();
 	let mut raw_string = String::new();
-	for mut line in string.lines(){
+	for line in string.lines(){
 		let edit_line = &newline.replace_all(line, "");
 		if ! edit_line.is_empty() {
 			raw_string.push_str(edit_line);
@@ -68,7 +68,7 @@ pub fn resolve_block(block: String, var_index: &HashMap<String, String>)
 -> String {
 	let var = Regex::new(r"\$(\w+[\w\d_\-]*)").unwrap();
 	let mut compiled_block = String::new();
-	for mut line in block.lines(){
+	for line in block.lines(){
 		if var.is_match(line) {
 			for cap in var.captures_iter(line){
 				let line = &line.replace(&cap[0], &var_index[&cap[1]]);
