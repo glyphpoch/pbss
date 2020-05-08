@@ -7,8 +7,8 @@ use filetime::FileTime;
 static PBSS_VERSION: &str = "Pbss-1.3 snap";
 
 pub struct Arguments {
-    pub quiet_mode: bool,
-    pub watch_mode: bool,
+    pub quiet: bool,
+    pub watch: bool,
 	pub readfile: String,
 	pub writefile: String,
 }
@@ -30,17 +30,22 @@ impl Arguments {
     let read_file = (&flags[flags.len() - 2]).to_string();
     let write_file = (&flags[flags.len() -1]).to_string();
     let mut quiet_mode = false;
+    let mut watch_mode = false;
 
     if flags.contains(&"-q".to_string()) || flags.contains(&"--quiet".to_string()){
         quiet_mode = true;
     }
+    if flags.contains(&"-w".to_string()) || flags.contains(&"--watch".to_string()) {
+        watch_mode = true;
+    }
+
     if quiet_mode == true && write_file == ":s".to_string() {
         eprintln!("Request to redirect to stdout given along with quiet flag");
         std::process::exit(2);
     }
 
     Arguments {
-        quiet_mode: quiet_mode, readfile: read_file, writefile: write_file, watch_mode: true}
+        quiet: quiet_mode, readfile: read_file, writefile: write_file, watch: watch_mode}
 }}
 
 pub fn compile(readfile: &String) -> String {

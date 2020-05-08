@@ -24,7 +24,7 @@ fn main() {
 
     let contents = compile(&arguments.readfile);
     file_handling::writer(contents, &arguments);
-    if arguments.watch_mode == true {
+    if arguments.watch == true {
     	start_watch(&arguments)
     }
 }
