@@ -3,6 +3,7 @@ use std::thread::sleep;
 use std::time::Duration;
 
 fn start_watch(args: &Arguments) {
+    // Start watch mode run a loop untill the program is asked to quit
     let mut mod_time = get_file_mod_time(&args.readfile);
 
     loop {
@@ -18,6 +19,8 @@ fn start_watch(args: &Arguments) {
 }
 
 fn main() {
+    // The starting point check for arguments and compile, if asked run
+    // for watch mode
     let arguments: Arguments = Arguments::read();
     file_handling::check_readfile(&arguments.readfile);
     if arguments.r#override == false {

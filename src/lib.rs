@@ -5,8 +5,10 @@ use filetime::FileTime;
 use std::fs::metadata;
 pub mod file_include;
 
+// Pbss Version
 static PBSS_VERSION: &str = "Pbss-1.3 snap";
 
+// Arguments struct
 pub struct Arguments {
     pub quiet: bool,
     pub watch: bool,
@@ -16,6 +18,7 @@ pub struct Arguments {
 }
 
 impl Arguments {
+    // Read arguments and enable and disable various features
     pub fn read() -> Arguments {
         let flags: Vec<String> = args().collect();
         let flags = &flags[1..];
@@ -61,6 +64,17 @@ impl Arguments {
 }
 
 pub fn compile(readfile: &String) -> String {
+    // Compile the reading file
+    /* Steps involved
+      - Read the file
+      - Strip out comments
+      - Remove empty lines
+      - Check for includes
+      - Track and put variables in a HashMap and remove the lines from the reading file
+      - Find all at rules @. and put them for later use in a vector
+      - Read normal style blocks
+      - Read and resolve all variables in the blocks and add to a master contents, out_conts
+    */
     let contents = parser::read_file(readfile);
     let uncomment_string = parser::strip_comments(contents);
     let mut raw_string = parser::strip_empty_lines(uncomment_string);
@@ -80,6 +94,7 @@ pub fn compile(readfile: &String) -> String {
 }
 
 pub fn get_file_mod_time(file: &String) -> i64 {
+    // Get the last modification  time of a file for watch mode
     let file_meta = metadata(file).expect("Can't get file metadata");
     let last_mod_time = FileTime::from_last_modification_time(&file_meta).seconds();
     last_mod_time
