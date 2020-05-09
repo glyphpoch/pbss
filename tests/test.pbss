@@ -2,8 +2,6 @@ $background: rgb(20,20,20);
 $accent_color:  rgb(0,200,0);
 $font-color1:  white; /* main font color */
 
-/* Comment */
-
 /* This
 is
 a
@@ -11,8 +9,6 @@ comment
 on
 multiple
 lines */
-
-Invalid Line
 
 div {
 	color: $accent_color;

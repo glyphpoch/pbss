@@ -75,20 +75,20 @@ pub fn compile(readfile: &String) -> String {
       - Read normal style blocks
       - Read and resolve all variables in the blocks and add to a master contents, out_conts
     */
-    let contents = parser::read_file(readfile);
-    let uncomment_string = parser::strip_comments(contents);
-    let mut raw_string = parser::strip_empty_lines(uncomment_string);
-    file_include::check_includes(&mut raw_string);
-    let (var_index, no_var_str) = parser::track_vars(raw_string);
-    let (at_rules, no_at_query_str) = parser::find_atrules(no_var_str);
-    let blocks = parser::find_blocks(no_at_query_str);
+    let mut contents = parser::read_file(readfile);
+    parser::strip_comments(&mut contents);
+    parser::strip_empty_lines(&mut contents);
+    file_include::check_includes(&mut contents);
+    let var_index = parser::track_vars(&mut contents);
+    let at_rules = parser::find_atrules(&mut contents);
+    let blocks = parser::find_blocks(contents);
     let mut out_conts = String::new();
 
     for block in blocks {
         out_conts.push_str(&parser::resolve_block(block, &var_index))
     }
-    for at_rule in at_rules {
-        out_conts.push_str(&parser::resolve_block(at_rule, &var_index))
+    for at_rule in &at_rules {
+        out_conts.push_str(&parser::resolve_block(at_rule.to_string(), &var_index))
     }
     return out_conts;
 }

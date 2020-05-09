@@ -11,13 +11,13 @@ pub fn read_file(file: &String) -> String {
     return contents;
 }
 
-pub fn strip_comments(contents: String) -> String {
+pub fn strip_comments(contents: &mut String) -> String {
     let comment = Regex::new(r#"/\*[\d\w \n\t!@#$%^&*\(\)_\-\+=~`|\\\[\]'":;<>,./?]*\*/"#).unwrap();
     let text = comment.replace_all(&contents, "");
     return text.to_string();
 }
 
-pub fn strip_empty_lines(string: String) -> String {
+pub fn strip_empty_lines(string: &mut String) -> String {
     let newline = Regex::new(r"^ *\n*$").unwrap();
     let mut raw_string = String::new();
     for line in string.lines() {
@@ -30,27 +30,27 @@ pub fn strip_empty_lines(string: String) -> String {
     return raw_string;
 }
 
-pub fn track_vars(string: String) -> (HashMap<String, String>, String) {
+pub fn track_vars(mut string: &mut String) -> HashMap<String, String> {
     let variable = Regex::new(r"\$(\w+[\w\d_\-]*) *\t*: *\t*([\d\w_\-\(\),]*);").unwrap();
     let mut variable_index: HashMap<String, String> = HashMap::new();
     for cap in variable.captures_iter(string.as_str()) {
         variable_index.insert(cap[1].to_string(), cap[2].to_string());
     }
-    let string = variable.replace_all(string.as_str(), "").to_string();
-    let string = strip_empty_lines(string);
-    return (variable_index, string);
+    *string = variable.replace_all(string.as_str(), "").to_string();
+    *string = strip_empty_lines(&mut string);
+    variable_index
 }
 
-pub fn find_atrules(string: String) -> (Vec<String>, String) {
+pub fn find_atrules(mut string: &mut String) -> Vec<String> {
     let at_rule = Regex::new(r"@([\w\d\-,: \(\)]*)\s*\t*\n*\{\n*\t* *[\w\d\-_+>,#.\[\]:]*\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_$]*;)+\n* *\t*}\n*\s*\t*}").unwrap();
     let mut queries: Vec<String> = Vec::new();
 
     for cap in at_rule.captures_iter(string.as_str()) {
         queries.push(cap[0].to_string());
     }
-    let string = at_rule.replace(string.as_str(), "").to_string();
-    let string = strip_empty_lines(string);
-    return (queries, string);
+    *string = at_rule.replace(string.as_str(), "").to_string();
+    *string = strip_empty_lines(&mut string);
+    return queries;
 }
 
 pub fn find_blocks(string: String) -> Vec<String> {
