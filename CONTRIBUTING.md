@@ -2,16 +2,16 @@
 ## Contributing
 There are many ways you can contribute to Pbss. Here are some of the ways
 ### Writing Code
-Pbss's development will be greatly helped if you help in writing code. This not only helps us, but it also useful for you as well as everyone using Pbss because the feature that you add will not only be used by you but by everyone.  
-* First fork the [repository](https://github.com/arijit79/Pbss/).
-* Now make a separate branch where you write your code. Make sure that you rebase that from _dev_ branch.
-* Open Github and submit a pull request to the [issue tracker](https://github.com/arijit79/Pbss/issues), your code will be accepted by us in a short interval.
+Pbss's development will be greatly helped if you help in writing code. This not only helps us, but to you as well as everyone using Pbss because the feature that you add will not only be used by you but by everyone.  
+* First fork the [repository](https://gitlab.com/arijitd/pbss.git).
+* Now make a separate branch where you write your code. Make sure that you rebase that from base it from the _dev_ branch.
+* Open Gitlab and submit a pull request to the [issue tracker](https://gitlab.com/arijitd/pbss/-/issues), your code will be accepted by us in a short interval.
 
 Some basic things to keep in mind while you write code :-
-* The code should somewhat come up-to PEP-8 standards.
+* The code should be formatted using rust format standards. You may use the __rustfmt__ or __cargo-fmt__
 * If you write your code in the _dev_ or _snap_ branches, the code might not be accepted by us because it takes time to merge code between same branches written by us and the community especially if it requires manual intervention.
-* You should also try to give us a basic documentation. At least very basic description of classes and methods should be provided along with workings and examples.
-* You should not modify too many of the base classes and functions, rather you can write the function and send to us to implement it.
+* You should also try to give us a basic documentation. At least very basic description of functions and structs should be provided along with workings and examples.
+* You should not modify too many of the base functions and structs, rather you can write the function and send to us to implement it.
 
 ### Writing documentation
 Another way to help us is by writing the documentation for us. This will help us write more code and cooler features for you. You can write documentation in the same way as for writing code. follow the same steps as above of forking and submitting pull request.  
@@ -23,7 +23,7 @@ Things to remember while writing docs :-
 * You should always keep in mind to be as exact, to the point and as detailed as possible without taking too many lines. Because everyone loves short and to the point docs.
 
 ### Filing Bug Reports
-It really helps if you help in finding bug reports so that we can fix it as quickly as possible. To file a bug report just simply report it to the [issue tracker](https://github.com/arijit79/Pbss/issues). You may also write fix for it if you like for us and follow the above instruction of writing code so that we may include it.
+It really helps if you help in finding bug reports so that we can fix it as quickly as possible. To file a bug report just simply report it to the [issue tracker](https://gitlab.com/arijitd/pbss/-/issues). You may also write fix for it if you like for us and follow the above instruction of writing code so that we may include it.
 
 ### Helping Others
 The developers are generally busy writing code and so they do not get time to interact and help the people and community out. You can help people in the issues page or at other forums and websites like Stack Overflow
@@ -47,4 +47,4 @@ Pbss has three branches and no more branches will created ever
 
 * __Dev__: This branch is the nightly build of Pbss and should only be used by Contributors and making pull requests. We do not take any guarantee if the code in this branch works
 
-If you try the snap or dev branch and found a bug, you should check if a issue exist on Github, if it doesn't then you should file one.
+If you try the snap or dev branch and found a bug, you should check if a issue exist on Gitlab, if it doesn't then you should file one.
