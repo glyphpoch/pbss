@@ -1,8 +1,8 @@
 pub mod parser;
 use std::env::args;
 pub mod file_handling;
-use std::fs::metadata;
 use filetime::FileTime;
+use std::fs::metadata;
 pub mod file_include;
 
 static PBSS_VERSION: &str = "Pbss-1.3 snap";
@@ -10,47 +10,58 @@ static PBSS_VERSION: &str = "Pbss-1.3 snap";
 pub struct Arguments {
     pub quiet: bool,
     pub watch: bool,
-	pub readfile: String,
-	pub writefile: String,
+    pub r#override: bool,
+    pub readfile: String,
+    pub writefile: String,
 }
 
 impl Arguments {
-    pub fn read() -> Arguments{
-    let flags: Vec<String> = args().collect();
-    let flags = &flags[1..];
+    pub fn read() -> Arguments {
+        let flags: Vec<String> = args().collect();
+        let flags = &flags[1..];
 
-    if flags.contains(&"-v".to_string()) || flags.contains(&"--version".to_string()){
-        println!("{}", PBSS_VERSION);
-        std::process::exit(0);
-    }
+        if flags.contains(&"-v".to_string()) || flags.contains(&"--version".to_string()) {
+            println!("{}", PBSS_VERSION);
+            std::process::exit(0);
+        }
 
-    if flags.len() < 2{
-        eprintln!("Error number of arguments");
-        std::process::exit(2);
-    }
-    let read_file = (&flags[flags.len() - 2]).to_string();
-    let write_file = (&flags[flags.len() -1]).to_string();
-    let mut quiet_mode = false;
-    let mut watch_mode = false;
+        if flags.len() < 2 {
+            eprintln!("Error number of arguments");
+            std::process::exit(2);
+        }
+        let read_file = (&flags[flags.len() - 2]).to_string();
+        let write_file = (&flags[flags.len() - 1]).to_string();
 
-    if flags.contains(&"-q".to_string()) || flags.contains(&"--quiet".to_string()){
-        quiet_mode = true;
-    }
-    if flags.contains(&"-w".to_string()) || flags.contains(&"--watch".to_string()) {
-        watch_mode = true;
-    }
+        let mut quiet_mode = false;
+        let mut watch_mode = false;
+        let mut r#override = false;
 
-    if quiet_mode == true && write_file == ":s".to_string() {
-        eprintln!("Request to redirect to stdout given along with quiet flag");
-        std::process::exit(2);
-    }
+        for para in &flags[..flags.len() - 2] {
+            match para.as_str() {
+                "-w" => watch_mode = true,
+                "-q" => quiet_mode = true,
+                "--override" => r#override = true,
+                _ => println!("Invalid Argument {}", para),
+            }
+        }
 
-    Arguments {
-        quiet: quiet_mode, readfile: read_file, writefile: write_file, watch: watch_mode}
-}}
+        if quiet_mode == true && write_file == ":s".to_string() {
+            eprintln!("Request to redirect to stdout given along with quiet flag");
+            std::process::exit(2);
+        }
+
+        Arguments {
+            quiet: quiet_mode,
+            readfile: read_file,
+            writefile: write_file,
+            watch: watch_mode,
+            r#override: r#override,
+        }
+    }
+}
 
 pub fn compile(readfile: &String) -> String {
-    let mut contents = parser::read_file(readfile);
+    let contents = parser::read_file(readfile);
     let uncomment_string = parser::strip_comments(contents);
     let mut raw_string = parser::strip_empty_lines(uncomment_string);
     file_include::check_includes(&mut raw_string);
