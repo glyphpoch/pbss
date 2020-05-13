@@ -1,4 +1,5 @@
 pub mod parser;
+pub mod new_parser;
 use std::env::args;
 pub mod file_handling;
 use filetime::FileTime;
@@ -61,36 +62,6 @@ impl Arguments {
             r#override: r#override,
         }
     }
-}
-
-pub fn compile(readfile: &String) -> String {
-    // Compile the reading file
-    /* Steps involved
-      - Read the file
-      - Strip out comments
-      - Remove empty lines
-      - Check for includes
-      - Track and put variables in a HashMap and remove the lines from the reading file
-      - Find all at rules @. and put them for later use in a vector
-      - Read normal style blocks
-      - Read and resolve all variables in the blocks and add to a master contents, out_conts
-    */
-    let mut contents = parser::read_file(readfile);
-    parser::strip_comments(&mut contents);
-    parser::strip_empty_lines(&mut contents);
-    file_include::check_includes(&mut contents);
-    let var_index = parser::track_vars(&mut contents);
-    let at_rules = parser::find_atrules(&mut contents);
-    let blocks = parser::find_blocks(contents);
-    let mut out_conts = String::new();
-
-    for block in blocks {
-        out_conts.push_str(&parser::resolve_block(block, &var_index))
-    }
-    for at_rule in &at_rules {
-        out_conts.push_str(&parser::resolve_block(at_rule.to_string(), &var_index))
-    }
-    return out_conts;
 }
 
 pub fn get_file_mod_time(file: &String) -> i64 {
