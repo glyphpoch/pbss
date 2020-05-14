@@ -1,5 +1,6 @@
 use pbss::{file_handling, get_file_mod_time, Arguments};
-use pbss::new_parser::{new_compile, generate_basic_patterns};
+use pbss::generate_basic_patterns;
+use pbss::parser::compile;
 use std::thread::sleep;
 use std::time::Duration;
 
@@ -28,7 +29,7 @@ fn main() {
         file_handling::check_writefile(&arguments.writefile);
     }
     let patterns = generate_basic_patterns();
-    let _contents = new_compile(&arguments.readfile, &patterns);
+    let _contents = compile(&arguments.readfile, &patterns);
     // file_handling::writer(contents, &arguments);
     if arguments.watch == true {
         start_watch(&arguments)
