@@ -29,9 +29,9 @@ fn main() {
         file_handling::check_writefile(&arguments.writefile);
     }
     let patterns = generate_basic_patterns();
-    let _contents = compile(&arguments.readfile, &patterns);
-    // file_handling::writer(contents, &arguments);
+    let contents = compile(&arguments.readfile, &patterns);
+    file_handling::writer(contents, &arguments);
     if arguments.watch == true {
-        start_watch(&arguments)
+        start_watch(&arguments);
     }
 }

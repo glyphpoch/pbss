@@ -69,7 +69,6 @@ impl Arguments {
 pub enum LineType {
     Variable,
     CommentStart,
-    CommentBody,
     CommentEnd,
     BlockStart,
     OneLineComment,
@@ -97,18 +96,17 @@ impl Pattern {
     }
 }
 
-pub fn generate_basic_patterns() -> [Pattern; 10] {
+pub fn generate_basic_patterns() -> [Pattern; 9] {
     [
-    Pattern::new(r"^\$(\w+[\w\d_\-]*): *\t*([\w \d \(\)\t!,]*);", LineType::Variable),
+    Pattern::new(r"^\$(\w+[\w\d_\-]*): *\t*([\w \d \(\)\t!,%]*);", LineType::Variable),
     Pattern::new(r#"/\*[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*$"#, LineType::CommentStart),
-    Pattern::new(r#"(/\*[\w\d ~` !@#$%^&\(\)_\-+=|\\\{}\[\]:;""''.,<>]*\*/$)"#, LineType::OneLineComment),
-    Pattern::new(r#"^[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*$"#, LineType::CommentBody),
     Pattern::new(r#"^[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*\*/$"#, LineType::CommentEnd),
+    Pattern::new(r#"(/\*[\w\d ~` !@#$%^&\(\)_\-+=|\\\{}\[\]:;""''.,<>]*\*/$)"#, LineType::OneLineComment),
     Pattern::new(r"^\t*\s*[\w\d.:\-_+> #\(\)\[\]]*\s*\t*\{", LineType::BlockStart),
     Pattern::new(r"^\t*\s*[\w\d-]* *\t*: [\w\d\(\)\[\]! $\-]*;",LineType::Style),
     Pattern::new(r"\t*\s*}", LineType::BlockEnd),
     Pattern::new(r"@[\w\d\- \(\):\t]* *\t*\{", LineType::AtRule),
-    Pattern::new(r"^\s*\t*$", LineType::Newline)
+    Pattern::new(r"^\s*\t*$", LineType::Newline),
     ]
 }
 
@@ -117,4 +115,14 @@ pub fn get_file_mod_time(file: &String) -> i64 {
     let file_meta = metadata(file).expect("Can't get file metadata");
     let last_mod_time = FileTime::from_last_modification_time(&file_meta).seconds();
     last_mod_time
+}
+
+pub struct State<'a> {
+    pub class_line: Line,
+    pub count: &'a mut usize,
+    pub patterns: &'a [Pattern],
+    pub var_index: &'a mut std::collections::HashMap<String, String>,
+    pub contents: &'a mut String,
+    pub lines: &'a Vec<&'a str>,
+    pub var_subs: &'a Regex
 }

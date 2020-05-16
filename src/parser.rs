@@ -1,4 +1,4 @@
-use crate::{Pattern,LineType,Line};
+use crate::{Pattern,LineType,Line,State};
 use std::collections::HashMap;
 use crate::actions;
 
@@ -17,7 +17,6 @@ pub fn get_classified_line(line: &str, patterns: &[Pattern]) -> Line{
     let mut ltypes: Vec<LineType> = Vec::new();
     for pattern in patterns {
         if pattern.expression.is_match(line){
-            let mut count = 1;
             ltypes.push(pattern.ptype);
         }
     }
@@ -30,19 +29,28 @@ pub fn get_classified_line(line: &str, patterns: &[Pattern]) -> Line{
     Line{ string: line.to_string(), ltype: ltypes }
 }
 
-pub fn compile(readfile: &String, patterns: &[Pattern]) {
+pub fn compile(readfile: &String, patterns: &[Pattern]) -> String{
     let contents = read_file(readfile);
     let mut count = 0;
     let lcount = contents.lines().count();
     let lines: Vec<&str> = contents.split("\n").collect();
     let mut var_index: HashMap<String, String> = HashMap::new();
     let mut contents: String = String::new();
+    let var_subs_exp = regex::Regex::new(r"\$(\w+[\w\d_\-]*)").unwrap();
     while count < lcount {
         let line = lines[count];
         let class_line = get_classified_line(&line, patterns);
-        actions::actions(class_line, &count, patterns, &mut var_index, &mut contents);
+        let mut state = State {
+            class_line: class_line,
+            count: &mut count,
+            patterns: patterns,
+            var_index: &mut var_index,
+            contents: &mut contents,
+            lines: &lines,
+            var_subs: &var_subs_exp
+        };
+        actions::actions(&mut state, &var_subs_exp);
         count += 1;
     }
-    println!("{}", contents);
-    println!("{:?}", var_index);
+    contents
 }
