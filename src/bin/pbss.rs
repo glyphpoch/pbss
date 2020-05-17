@@ -1,10 +1,10 @@
-use pbss::{file_handling, get_file_mod_time, Arguments};
 use pbss::generate_basic_patterns;
 use pbss::parser::compile;
+use pbss::{file_handling, get_file_mod_time, Arguments};
 use std::thread::sleep;
 use std::time::Duration;
 
-fn start_watch(args: &Arguments) {
+fn start_watch(args: &Arguments, patterns: &[pbss::Pattern]) {
     // Start watch mode run a loop untill the program is asked to quit
     let mut mod_time = get_file_mod_time(&args.readfile);
 
@@ -13,9 +13,8 @@ fn start_watch(args: &Arguments) {
         if mod_time == current_mod {
             sleep(Duration::new(1, 0));
         } else {
-            // let contents = compile(&args.readfile);
-            // file_handling::writer(contents, &args);
-            mod_time = current_mod;
+            let contents = compile(&args.readfile, &patterns);
+            file_handling::writer(contents, &args);
         }
     }
 }
@@ -32,6 +31,6 @@ fn main() {
     let contents = compile(&arguments.readfile, &patterns);
     file_handling::writer(contents, &arguments);
     if arguments.watch == true {
-        start_watch(&arguments);
+        start_watch(&arguments, &patterns);
     }
 }

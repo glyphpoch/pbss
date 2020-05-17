@@ -1,5 +1,5 @@
-pub mod parser;
 pub mod actions;
+pub mod parser;
 use regex::Regex;
 use std::env::args;
 pub mod file_handling;
@@ -77,7 +77,7 @@ pub enum LineType {
     AtRule,
     OneLineStyle,
     Invalid,
-    Newline
+    Newline,
 }
 
 pub struct Line {
@@ -87,26 +87,47 @@ pub struct Line {
 
 pub struct Pattern {
     expression: Regex,
-    ptype: LineType
+    ptype: LineType,
 }
 
 impl Pattern {
-    fn new(exp: &str, ptype: LineType) -> Pattern{
-        Pattern {expression: Regex::new(exp).unwrap(), ptype: ptype }
+    fn new(exp: &str, ptype: LineType) -> Pattern {
+        Pattern {
+            expression: Regex::new(exp).unwrap(),
+            ptype: ptype,
+        }
     }
 }
 
 pub fn generate_basic_patterns() -> [Pattern; 9] {
     [
-    Pattern::new(r"^\$(\w+[\w\d_\-]*): *\t*([\w \d \(\)\t!,%]*);", LineType::Variable),
-    Pattern::new(r#"/\*[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*$"#, LineType::CommentStart),
-    Pattern::new(r#"^[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*\*/$"#, LineType::CommentEnd),
-    Pattern::new(r#"(/\*[\w\d ~` !@#$%^&\(\)_\-+=|\\\{}\[\]:;""''.,<>]*\*/$)"#, LineType::OneLineComment),
-    Pattern::new(r"^\t*\s*[\w\d.:\-_+> #\(\)\[\]]*\s*\t*\{", LineType::BlockStart),
-    Pattern::new(r"^\t*\s*[\w\d-]* *\t*: [\w\d\(\)\[\]! $\-]*;",LineType::Style),
-    Pattern::new(r"\t*\s*}", LineType::BlockEnd),
-    Pattern::new(r"@[\w\d\- \(\):\t$]* *\t*\{", LineType::AtRule),
-    Pattern::new(r"^\s*\t*$", LineType::Newline),
+        Pattern::new(
+            r"^\$(\w+[\w\d_\-]*): *\t*([\w \d \(\)\t!,%]*);",
+            LineType::Variable,
+        ),
+        Pattern::new(
+            r#"/\*[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*$"#,
+            LineType::CommentStart,
+        ),
+        Pattern::new(
+            r#"^[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*\*/$"#,
+            LineType::CommentEnd,
+        ),
+        Pattern::new(
+            r#"(/\*[\w\d ~` !@#$%^&\(\)_\-+=|\\\{}\[\]:;""''.,<>]*\*/$)"#,
+            LineType::OneLineComment,
+        ),
+        Pattern::new(
+            r"^\t*\s*[\w\d.:\-_+> #\(\)\[\]]*\s*\t*\{",
+            LineType::BlockStart,
+        ),
+        Pattern::new(
+            r"^\t*\s*[\w\d-]* *\t*: [\w\d\(\)\[\]! $\-]*;",
+            LineType::Style,
+        ),
+        Pattern::new(r"\t*\s*}", LineType::BlockEnd),
+        Pattern::new(r"@[\w\d\- \(\):\t$]* *\t*\{", LineType::AtRule),
+        Pattern::new(r"^\s*\t*$", LineType::Newline),
     ]
 }
 
@@ -124,5 +145,5 @@ pub struct State<'a> {
     pub var_index: &'a mut std::collections::HashMap<String, String>,
     pub contents: &'a mut String,
     pub lines: &'a Vec<&'a str>,
-    pub var_subs: &'a Regex
+    pub var_subs: &'a Regex,
 }
