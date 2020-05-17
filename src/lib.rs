@@ -11,6 +11,7 @@ pub mod file_include;
 static PBSS_VERSION: &str = "Pbss-1.3 snap";
 
 // Arguments struct
+#[derive(Clone)]
 pub struct Arguments {
     pub quiet: bool,
     pub watch: bool,

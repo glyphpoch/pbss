@@ -1,36 +1,48 @@
 use pbss::generate_basic_patterns;
 use pbss::parser::compile;
 use pbss::{file_handling, get_file_mod_time, Arguments};
-use std::thread::sleep;
+use std::thread;
+use std::sync::mpsc;
 use std::time::Duration;
 
-fn start_watch(args: &Arguments, patterns: &[pbss::Pattern]) {
-    // Start watch mode run a loop untill the program is asked to quit
-    let mut mod_time = get_file_mod_time(&args.readfile);
+#[derive(std::cmp::PartialEq)]
+struct Change;
 
-    loop {
-        let current_mod = get_file_mod_time(&args.readfile);
-        if mod_time == current_mod {
-            sleep(Duration::new(1, 0));
-        } else {
-            let contents = compile(&args.readfile, &patterns);
-            file_handling::writer(contents, &args);
-        }
-    }
+fn compile_file(args: &Arguments, patterns: &[pbss::Pattern]) {
+    let contents = compile(&args.readfile, &patterns);
+    file_handling::writer(contents, &args);
 }
 
 fn main() {
     // The starting point check for arguments and compile, if asked run
     // for watch mode
     let arguments: Arguments = Arguments::read();
+    let copy_args = arguments.clone();
     file_handling::check_readfile(&arguments.readfile);
     if arguments.r#override == false {
         file_handling::check_writefile(&arguments.writefile);
     }
     let patterns = generate_basic_patterns();
-    let contents = compile(&arguments.readfile, &patterns);
-    file_handling::writer(contents, &arguments);
+    compile_file(&arguments, &patterns);
     if arguments.watch == true {
-        start_watch(&arguments, &patterns);
+        let (tx, rx) = mpsc::channel();
+        let handle = thread::spawn(move || {
+            let mut mod_time = get_file_mod_time(&arguments.readfile);
+
+            loop {
+                let current_mod = get_file_mod_time(&arguments.readfile);
+                if mod_time == current_mod {
+                    thread::sleep(Duration::new(1, 0));
+                } else {
+                    tx.send(Change).expect("Oops. Something went wrong");
+                    mod_time = current_mod;
+                }
+            }
+        });
+        for rmsg in rx{
+            if rmsg == Change {
+                compile_file(&copy_args, &patterns);
+            }
+        }
     }
 }
