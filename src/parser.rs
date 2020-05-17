@@ -36,7 +36,7 @@ pub fn compile(readfile: &String, patterns: &[Pattern]) -> String{
     let lines: Vec<&str> = contents.split("\n").collect();
     let mut var_index: HashMap<String, String> = HashMap::new();
     let mut contents: String = String::new();
-    let var_subs_exp = regex::Regex::new(r"\$(\w+[\w\d_\-]*)").unwrap();
+    let var_subs_exp = regex::Regex::new(r"\$(\w+[\w\d_\-]*)*").unwrap();
     while count < lcount {
         let line = lines[count];
         let class_line = get_classified_line(&line, patterns);

@@ -33,15 +33,18 @@ pub fn act_ml_comment(cs: &mut State) {
     }
 }
 
-pub fn act_block_start(cs: &mut State) {
+pub fn push_contents(cs: &mut State) {
     cs.contents.push_str(&cs.class_line.string);
     cs.contents.push_str("\n");
 }
 
-pub fn act_block_start(state: &State, ve: &Regex) {
-    for ve.captures_iter(state.class_line.string){
-
+pub fn act_generic(cs: &mut State, ve: &Regex) {
+    let rep_no = ve.captures_len();
+    for cap in ve.captures_iter(&cs.class_line.string.to_string()){
+        cs.class_line.string = cs.class_line.string.replace(&cap[0], &cs.var_index[&cap[1]]);
     }
+    cs.contents.push_str(&cs.class_line.string);
+    cs.contents.push_str("\n");
 }
 
 pub fn actions(mut state: &mut State, var_exp: &Regex) {
@@ -50,12 +53,12 @@ pub fn actions(mut state: &mut State, var_exp: &Regex) {
             LineType::Variable => act_track_vars(&mut state),
             LineType::OneLineComment => act_ol_comment(&mut state),
             LineType::CommentStart => act_ml_comment(&mut state),
-            LineType::BlockStart => act_block_start(&mut state),
-            // LineType::Style => println!("{}", line),
-            // LineType::BlockEnd => println!("{}", line),
-            // LineType::AtRule => println!("{}", line),
-            // LineType::Newline => println!("{}", line),
-            // LineType::OneLineStyle => println!("{}", line),
+            LineType::BlockStart => push_contents(&mut state),
+            LineType::Style => act_generic(&mut state, &var_exp),
+            LineType::BlockEnd => push_contents(&mut state),
+            LineType::AtRule => act_generic(&mut state, &var_exp),
+            LineType::Newline => push_contents(&mut state),
+            LineType::OneLineStyle => act_generic(&mut state, &var_exp),
             LineType::Invalid => {
                 let line_no = format!("{}", *state.count + 1);
                 eprintln!("{}| {}", Blue.bold().paint(line_no)

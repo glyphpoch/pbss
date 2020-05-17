@@ -1,6 +1,7 @@
 $background:  rgb(20,20,20);
 $accent_color:  rgb(0,200,0);
 $font-color1:  white; /* main font color */
+$media-test: only screen;
 
 /* Two liner
 Cooment */
@@ -14,11 +15,11 @@ multiple
 lines */
 
 section {
-	color: $accent_color;
+	color: $accent_color $font-color1;
 	background: $background;
 }
 
-@media only screen and (max-width: 500px) {
+@media $media-test and (max-width: 500px {
 	div {
 		color: blue;
 		background: green;

@@ -105,7 +105,7 @@ pub fn generate_basic_patterns() -> [Pattern; 9] {
     Pattern::new(r"^\t*\s*[\w\d.:\-_+> #\(\)\[\]]*\s*\t*\{", LineType::BlockStart),
     Pattern::new(r"^\t*\s*[\w\d-]* *\t*: [\w\d\(\)\[\]! $\-]*;",LineType::Style),
     Pattern::new(r"\t*\s*}", LineType::BlockEnd),
-    Pattern::new(r"@[\w\d\- \(\):\t]* *\t*\{", LineType::AtRule),
+    Pattern::new(r"@[\w\d\- \(\):\t$]* *\t*\{", LineType::AtRule),
     Pattern::new(r"^\s*\t*$", LineType::Newline),
     ]
 }

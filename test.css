@@ -1,0 +1,30 @@
+/* main font color */
+
+/* Two liner
+Cooment */
+
+/* This
+is
+a
+comment
+on
+multiple
+lines */
+
+section {
+	color: rgb(0,200,0) white;
+	background: rgb(20,20,20);
+}
+
+@media only screen and (max-width: 500px {
+	div {
+		color: blue;
+		background: green;
+		border-bottom: rgb(20,20,20);
+	}
+}
+
+section { height: 10px; }
+
+/* including */
+
