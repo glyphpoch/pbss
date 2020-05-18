@@ -26,7 +26,7 @@ fn main() {
     compile_file(&arguments, &patterns);
     if arguments.watch == true {
         let (tx, rx) = mpsc::channel();
-        let handle = thread::spawn(move || {
+        let _ = thread::spawn(move || {
             let mut mod_time = get_file_mod_time(&arguments.readfile);
 
             loop {

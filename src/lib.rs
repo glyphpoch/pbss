@@ -115,7 +115,7 @@ pub fn generate_basic_patterns() -> [Pattern; 9] {
             LineType::CommentEnd,
         ),
         Pattern::new(
-            r#"(/\*[\w\d ~` !@#$%^&\(\)_\-+=|\\\{}\[\]:;""''.,<>]*\*/$)"#,
+            r#"^(/\*[\w\d ~` !@#$%^&\(\)_\-+=|\\\{}\[\]:;""''.,<>]*\*/$)"#,
             LineType::OneLineComment,
         ),
         Pattern::new(

@@ -45,7 +45,6 @@ pub fn push_contents(cs: &mut State) {
 }
 
 pub fn act_generic(cs: &mut State, ve: &Regex) {
-    let rep_no = ve.captures_len();
     for cap in ve.captures_iter(&cs.class_line.string.to_string()) {
         cs.class_line.string = cs
             .class_line
