@@ -119,11 +119,11 @@ pub fn generate_basic_patterns() -> [Pattern; 9] {
             LineType::OneLineComment,
         ),
         Pattern::new(
-            r"^\t*\s*[\w\d.:\-_+> #\(\)\[\]]*\s*\t*\{",
+            r"^\t*\s*[\w\d.:\-_+> #\(\)\[\]*]*\s*\t*\{",
             LineType::BlockStart,
         ),
         Pattern::new(
-            r"^\t*\s*[\w\d-]* *\t*: [\w\d\(\)\[\]! $\-]*;",
+            r"^\t*\s*[\w\d\-]* *\t*: [\w\d\(\)\[\]! $\-,]*;",
             LineType::Style,
         ),
         Pattern::new(r"\t*\s*}", LineType::BlockEnd),
