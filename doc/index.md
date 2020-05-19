@@ -4,7 +4,9 @@ This is the official documentation for Pbss and has been rewritten for Pbss's se
 **Table of Contents**
 1. [Overview](#overview)
 2. [What's new in Pbss 2.0](#release-info)
-3. [Parts of Pbss](#parts)
+3. [Installation](#install)
+4. [Parts of Pbss](#parts)
+5. [Feature Explanantions](#explainations)
 
 
 ## <a name="overview"></a> 1. What is Pbss
@@ -26,7 +28,26 @@ Although it lacked the features that its predecessors had brought to the table l
 - It did not provide native support for colors
 - It did not provide support for functions
 
-## <a name="parts"></a> Parts of Pbss
-## Features
-### Variables
-### Including other source files
+## <a name="install"></a>3. Installation
+Pbss is quite simple to install. Go to the releases page and download the executable for your OS. For Windows, it will have a *.exe* extension, Linux packages will need to get the *.tar.gz* file and for Mac Os
+
+## <a name="parts"></a>4. Parts of Pbss
+Pbss although has only one executabes and does not require any external libraries, has been affectionately been divided into two parts:-
+* **Pbss:** which is the actual executable and frontend
+* **Mynk:** the parser and compiler and writer engine. Mynk goes through the file line by line, classifies the type of line and performs actions that need to be taken for the line and report errors, if the line is considered invalid
+
+## <a name="explainations"></a>5. Features Explainations
+### Traditional CSS
+CSS is written in the same way as you have always been writing, for example let's change the background color of body, set the width of all div tags to `100px` and increaes the font size to `2em`
+
+``` CSS
+* {
+    font-size: 2em; /* All elements have a font size of 2em */
+}
+body {
+    background: rgb(255,255,255); /* White background */
+}
+div {
+    width: 100px; /* Height of all divs will be 100px */
+}
+```
