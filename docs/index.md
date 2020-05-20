@@ -29,7 +29,31 @@ Although it lacked the features that its predecessors had brought to the table l
 - It did not provide support for functions
 
 ## <a name="install"></a>3. Installation
-Pbss is quite simple to install. Go to the releases page and download the executable for your OS. For Windows, it will have a *.exe* extension, Linux packages will need to get the *.tar.gz* file and for Mac Os
+Pbss is quite simple to install. Go to the releases page and download the executable for your OS. For Windows and MacOS, download the *.zip* file, for Linux download the *.tar.gz* file. **Please do not download the source code files**. Once down follow these instructions
+
+### Windows
+* Put the executable in a place that you like. For example C:\Users\\[YOUR-USERNAME]\pbss.
+* Now open the start menu and type *env* in your search bar and clicking on PATH.
+* Now add the the path to the folder where you stored the binary by adding a colon(:) and then putting the path to the directory
+
+### Linux
+* Put the executable in a place you like. Most Linux/UNIX users pu binaries in a folder in their home directory named *bin*. But you can use anything
+* Now in most Linux distributions like Ubuntu, this should show allow you to run Pbss, but if it doesn't add this line to any of your profile files, like .profile, .bashrc, .bash_profile, .zshrc, .zsh_profile
+
+```
+	export PATH="$PATH:$HOME/bin/"
+```
+* This adds your home directory's bin folder to a variable called $PATH which is read by shells for getting program names. If you chose to use another directory, replace the contents after the color(:) with your own directory path
+
+### MacOS
+* Put the executable in a suitable directory like in your home directory's bin directory or you can crate a pbss directory
+* Add this to your *.bashrc*
+
+```
+	export PATH="$PATH:$HOME/bin/"
+```
+* This adds your home directory's bin folder to a variable called $PATH which is read by shells for getting program names. If you chose to use another directory, replace the contents after the color(:) with your own directory path
+
 
 ## <a name="parts"></a>4. Parts of Pbss
 Pbss although has only one executabes and does not require any external libraries, has been affectionately been divided into two parts:-

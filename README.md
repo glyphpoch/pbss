@@ -4,14 +4,12 @@ Pbss is an attempt to improve on the Cascading Stylesheet Language by adding eas
 # Getting started with Pbss
 It is very easy to get started with Pbss. First download the latest stable executable for your platform from the Pbss's release page. Usually they do have a version number such as Pbss-[major-version].0. Now follow these instructions for your Operating System.
 
-## Microsoft Windows
+### Windows
 * Put the executable in a place that you like. For example C:\Users\\[YOUR-USERNAME]\pbss.
 * Now open the start menu and type *env* in your search bar and clicking on PATH.
 * Now add the the path to the folder where you stored the binary by adding a colon(:) and then putting the path to the directory
 
-**You may put the executable in a place that is already in the $PATH variable, but that may require administrative privileges**
-
-## Linux/UNIX
+### Linux
 * Put the executable in a place you like. Most Linux/UNIX users pu binaries in a folder in their home directory named *bin*. But you can use anything
 * Now in most Linux distributions like Ubuntu, this should show allow you to run Pbss, but if it doesn't add this line to any of your profile files, like .profile, .bashrc, .bash_profile, .zshrc, .zsh_profile
 
@@ -20,8 +18,14 @@ It is very easy to get started with Pbss. First download the latest stable execu
 ```
 * This adds your home directory's bin folder to a variable called $PATH which is read by shells for getting program names. If you chose to use another directory, replace the contents after the color(:) with your own directory path
 
-## MacOS X
-Pbss's versions which are 1.2 onwards are not fully MacOS compatible. Therefore we recommend you to compile this from the source
+### MacOS
+* Put the executable in a suitable directory like in your home directory's bin directory or you can crate a pbss directory
+* Add this to your *.bashrc*
+
+```
+	export PATH="$PATH:$HOME/bin/"
+```
+* This adds your home directory's bin folder to a variable called $PATH which is read by shells for getting program names. If you chose to use another directory, replace the contents after the color(:) with your own directory path
 
 ## Building From source
 In order to build Pbss from source, make sure that you have fulfilled these requirements:-
