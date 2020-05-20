@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file
 
+# [v1.3] - 2020-05-05
+
+### Added
+* Added back variables
+* Added the option to redirect the result to stdout
+
+### Changed
+* Chnaged the new variable syntax with the $ type syntax
+* Changed the way where @ rules are put at the very bottom
+
+### Removed
+* Removed the old parsing engine
+
 # [v1.2] - 2020-04-25
 ### Changed
 * Rewrote the entire codebase in the Rust language

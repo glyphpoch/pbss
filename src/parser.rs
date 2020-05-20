@@ -1,84 +1,61 @@
-use std::fs::File;
-use std::io::prelude::*;
-use regex::Regex;
+use crate::actions;
+use crate::file_include;
+use crate::{Line, LineType, Pattern, State};
 use std::collections::HashMap;
 
-pub fn read_file(file: &String) -> String{
-	let mut file = File::open(file).expect("Can't open file");
-	let mut contents = String::new();
-	file.read_to_string(&mut contents).expect("Can't read file");
+use std::fs::File;
+use std::io::prelude::*;
 
-	return contents;
+pub fn read_file(file: &String) -> String {
+    let mut file = File::open(file).expect("Can't open file");
+    let mut contents = String::new();
+    file.read_to_string(&mut contents).expect("Can't read file");
+
+    return contents;
 }
 
-pub fn strip_comments(contents: String) -> String{
-	let comment = Regex::new(r#"/\*[\d\w \n\t!@#$%^&*\(\)_\-\+=~`|\\\{\}\[\]'":;<>,./?]*\\*/"#).unwrap();
-	let text = comment.replace_all(&contents, "");
-	return text.to_string()
+pub fn get_classified_line(line: &str, patterns: &[Pattern]) -> Line {
+    let mut ltypes: Vec<LineType> = Vec::new();
+    for pattern in patterns {
+        if pattern.expression.is_match(line) {
+            ltypes.push(pattern.ptype);
+        }
+    }
+    if ltypes.contains(&LineType::BlockStart) && ltypes.contains(&LineType::BlockEnd) {
+        ltypes = vec![LineType::OneLineStyle];
+    }
+    if ltypes.len() == 0 {
+        ltypes.push(LineType::Invalid);
+    }
+    Line {
+        string: line.to_string(),
+        ltype: ltypes,
+    }
 }
 
-pub fn strip_empty_lines(string: String) -> String{
-	let newline = Regex::new(r"^ *\n*$").unwrap();
-	let mut raw_string = String::new();
-	for mut line in string.lines(){
-		let edit_line = &newline.replace_all(line, "");
-		if ! edit_line.is_empty() {
-			raw_string.push_str(edit_line);
-			raw_string.push_str("\n");
-		}
-	}
-	return raw_string;
-}
-
-pub fn track_vars(string: String)-> (HashMap<String, String>, String)
- {
-	let variable = Regex::new(r"\$(\w+[\w\d_\-]*) *\t*: *\t*([\d\w_\-\(\),]*);")
-		.unwrap();
-	let mut variable_index: HashMap<String, String> = HashMap::new();
-	for cap in variable.captures_iter(string.as_str()){
-		variable_index.insert(cap[1].to_string(), cap[2].to_string());
-	}
-	let string = variable.replace_all(string.as_str(), "").to_string();
-	let string = strip_empty_lines(string);
-	return (variable_index, string);
-}
-
-pub fn find_atrules(string: String) -> (Vec<String>, String){
-	let at_rule = Regex::new(r"@([\w\d\-,: \(\)]*)\s*\t*\n*\{\n*\t* *[\w\d\-_+>,#.\[\]:]*\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_$]*;)+\n* *\t*}\n*\s*\t*}").unwrap();
-	let mut queries: Vec<String> = Vec::new();
-
-	for cap in at_rule.captures_iter(string.as_str()){
-		queries.push(cap[0].to_string());
-	}
-	let string = at_rule.replace(string.as_str(), "").to_string();
-	let string = strip_empty_lines(string);
-	return (queries, string)
-}
-
-pub fn find_blocks(string: String) -> Vec<String> {
-	let block = Regex::new(r"([\w\d\-_+>,#.\[\]:]*)\n* *\t*\{(\n*\t* *[\w\d\-]* *\t*: [\w\d\(\)\-_$]*;)+\n* *\t*}").unwrap();
-	let mut blocks: Vec<String> = Vec::new();
-	for cap in block.captures_iter(string.as_str()){
-		blocks.push(cap[0].to_string());
-	}
-	return blocks;
-}
-
-pub fn resolve_block(block: String, var_index: &HashMap<String, String>) 
--> String {
-	let var = Regex::new(r"\$(\w+[\w\d_\-]*)").unwrap();
-	let mut compiled_block = String::new();
-	for mut line in block.lines(){
-		if var.is_match(line) {
-			for cap in var.captures_iter(line){
-				let line = &line.replace(&cap[0], &var_index[&cap[1]]);
-				compiled_block.push_str(line.as_str());
-				compiled_block.push_str("\n");
-			}
-		} else {
-			compiled_block.push_str(line);
-			compiled_block.push_str("\n");
-		}
-	}
-	return compiled_block;
+pub fn compile(file: &String, patterns: &[Pattern]) -> String {
+    let mut contents = read_file(file);
+    file_include::check_includes(&mut contents);
+    let mut count = 0;
+    let lcount = contents.lines().count();
+    let lines: Vec<&str> = contents.split("\n").collect();
+    let mut var_index: HashMap<String, String> = HashMap::new();
+    let mut contents: String = String::new();
+    let var_subs_exp = regex::Regex::new(r"\$(\w+[\w\d_\-]*)*").unwrap();
+    while count < lcount {
+        let line = lines[count];
+        let class_line = get_classified_line(&line, patterns);
+        let mut state = State {
+            class_line: class_line,
+            count: &mut count,
+            patterns: patterns,
+            var_index: &mut var_index,
+            contents: &mut contents,
+            lines: &lines,
+            var_subs: &var_subs_exp,
+        };
+        actions::actions(&mut state, &var_subs_exp);
+        count += 1;
+    }
+    contents
 }
