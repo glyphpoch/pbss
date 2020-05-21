@@ -8,7 +8,7 @@ use std::fs::metadata;
 pub mod file_include;
 
 // Pbss Version
-static PBSS_VERSION: &str = "Pbss-1.3 snap";
+static PBSS_VERSION: &str = "Pbss-2.0 Beryllium";
 
 // Arguments struct
 #[derive(Clone)]
