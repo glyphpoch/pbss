@@ -1,6 +1,6 @@
-use pbss::generate_basic_patterns;
-use pbss::parser::compile;
-use pbss::{file_handling, get_file_mod_time, Arguments};
+use mynk::generate_basic_patterns;
+use mynk::parser::compile;
+use mynk::{file_handling, get_file_mod_time, Arguments};
 use std::thread;
 use std::sync::mpsc;
 use std::time::Duration;
@@ -8,7 +8,7 @@ use std::time::Duration;
 #[derive(std::cmp::PartialEq)]
 struct Change;
 
-fn compile_file(args: &Arguments, patterns: &[pbss::Pattern]) {
+fn compile_file(args: &Arguments, patterns: &[mynk::Pattern]) {
     let contents = compile(&args.readfile, &patterns);
     file_handling::writer(contents, &args);
 }
