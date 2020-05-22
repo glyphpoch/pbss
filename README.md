@@ -1,7 +1,7 @@
 # Pbss: Practically Better Style Sheets
-Pbss is an attempt to improve on the Cascading Stylesheet Language by adding easier support for variables, arithmetic and providing additional features such as macros, functions and more. Plus it is a sort of linter that prevents your stylesheet from not working due to a tiny letter you typed by mistake
+Pbss is an attempt to improve on the Cascading Stylesheet Language by adding easier support for variables, arithmetic and providing additional features such as macros, functions and more. Plus it is a sort of linter that prevents your stylesheet from not working due to a tiny letter you typed by mistake. Specifically said it is a preprocessor for CSS similar to Sass and Less
 
-# Getting started with Pbss
+## Installation
 It is very easy to get started with Pbss. First download the latest stable executable for your platform from the Pbss's release page. Usually they do have a version number such as Pbss-[major-version].0. Now follow these instructions for your Operating System.
 
 ### Windows
@@ -48,11 +48,17 @@ In order to build Pbss from source, make sure that you have fulfilled these requ
 
 * Now open the target folder. Inside it you will see the release folder. Now move the executable *pbss* depending on the steps of your OS defined above.
 
-# The Move From Python to Rust
+## Getting started
+To get started and learn about features supported in Pbss, check out the [docs](docs/index.md)
+
+## The Move From Python to Rust
 Pbss was initially written in Python but since version 1.it is being completely rewritten in the Rust language due to its grater efficiency and robustness. The move is still not complete although it is expected to be completed by the next major release. A few reasons for this move are
 * Rust is a compiled language which is helpful since it generates machine code making the distribution easier
 * Rust does not require a native runtime to be installed
 * Since it has a strong type checking, it provides a greater speed over Python
+
+## Helping Us
+Pbss is built by your help. Please check the [CONTRIBUTING](CONTRIBUTING.md) for more help
 
 ## Licensing and Price
 Pbss is completely free for personal, educational and commercial use and is Licensed under the open-source MIT License. It is completely open-source and will always be free for use. Users are free to share, change and use Pbss in anyway they like

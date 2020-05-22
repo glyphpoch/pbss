@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file
 
+## [v2.0] - 2020-05-20
+### Added
+* Error Messages
+* Override prompt and disabling options
+
+### Changed
+* Multi-threaded the watch mode
+* Graceful exit on error number of arguments
+
+### Removed
+* Removed all stale parser functions
+
+### Improved
+* Improved the docs to reflect all major features
+* Improved the README for better install instructions
+
 # [v1.3] - 2020-05-05
 
 ### Added
