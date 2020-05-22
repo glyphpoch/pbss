@@ -6,12 +6,13 @@ It is very easy to get started with Pbss. First download the latest stable execu
 
 ### Windows
 * Put the executable in a place that you like. For example C:\Users\\[YOUR-USERNAME]\pbss.
-* Now open the start menu and type *env* in your search bar and clicking on PATH.
+* Now open the start menu and type *env* in your search bar and clicking on Enviroment Variables
+* Select PATH from the items and click on edit.
 * Now add the the path to the folder where you stored the binary by adding a colon(:) and then putting the path to the directory
 
 ### Linux
-* Put the executable in a place you like. Most Linux/UNIX users pu binaries in a folder in their home directory named *bin*. But you can use anything
-* Now in most Linux distributions like Ubuntu, this should show allow you to run Pbss, but if it doesn't add this line to any of your profile files, like .profile, .bashrc, .bash_profile, .zshrc, .zsh_profile
+* Put the executable in a place you like. Most Linux/UNIX users like to put binaries that are not installed from their official repos in a folder in their home directory named *bin*. But you can use anything
+* Now in most Linux distributions like Ubuntu if you used the bin directory, this should show allow you to run Pbss, after restarting your terminal, but if it doesn't add this line to any of your profile files, like .profile, .bashrc, .bash_profile, .zshrc, .zsh_profile
 
 ```
 	export PATH="$PATH:$HOME/bin/"
