@@ -14,3 +14,4 @@ keywords = ["Style sheets", "CSS"]
 [dependencies]
 filetime = "0.2"
 mynk = { path = "../mynk" }
+util = { path = "../util" }

@@ -6,6 +6,7 @@ pub mod file_handling;
 use filetime::FileTime;
 use std::fs::metadata;
 pub mod file_include;
+use util::lines::{Line,Pattern};
 
 // Pbss Version
 static PBSS_VERSION: &str = "Pbss-2.0 Beryllium";
@@ -66,72 +67,6 @@ impl Arguments {
     }
 }
 
-#[derive(Clone, Copy, std::cmp::PartialEq)]
-pub enum LineType {
-    Variable,
-    CommentStart,
-    CommentEnd,
-    BlockStart,
-    OneLineComment,
-    Style,
-    BlockEnd,
-    AtRule,
-    OneLineStyle,
-    Invalid,
-    Newline,
-}
-
-pub struct Line {
-    pub string: String,
-    pub ltype: Vec<LineType>,
-}
-
-pub struct Pattern {
-    expression: Regex,
-    ptype: LineType,
-}
-
-impl Pattern {
-    fn new(exp: &str, ptype: LineType) -> Pattern {
-        Pattern {
-            expression: Regex::new(exp).unwrap(),
-            ptype: ptype,
-        }
-    }
-}
-
-pub fn generate_basic_patterns() -> [Pattern; 9] {
-    [
-        Pattern::new(
-            r"^\$(\w+[\w\d_\-]*): *\t*([\w \d \(\)\t!,%]*);",
-            LineType::Variable,
-        ),
-        Pattern::new(
-            r#"/\*[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*$"#,
-            LineType::CommentStart,
-        ),
-        Pattern::new(
-            r#"^[\w\d~` !@#$%^&()_\-+=|\\\{}\[\]:;""''.,<>]*\*/$"#,
-            LineType::CommentEnd,
-        ),
-        Pattern::new(
-            r#"^(/\*[\w\d ~` !@#$%^&\(\)_\-+=|\\\{}\[\]:;""''.,<>]*\*/$)"#,
-            LineType::OneLineComment,
-        ),
-        Pattern::new(
-            r"^\t*\s*[\w\d.:\-_+> #\(\)\[\]*]*\s*\t*\{",
-            LineType::BlockStart,
-        ),
-        Pattern::new(
-            r"^\t*\s*[\w\d\-]* *\t*: [\w\d\(\)\[\]! $\-,]*;",
-            LineType::Style,
-        ),
-        Pattern::new(r"\t*\s*}", LineType::BlockEnd),
-        Pattern::new(r"@[\w\d\- \(\):\t$]* *\t*\{", LineType::AtRule),
-        Pattern::new(r"^\s*\t*$", LineType::Newline),
-    ]
-}
-
 pub fn get_file_mod_time(file: &String) -> i64 {
     // Get the last modification  time of a file for watch mode
     let file_meta = metadata(file).expect("Can't get file metadata");
@@ -146,5 +81,5 @@ pub struct State<'a> {
     pub var_index: &'a mut std::collections::HashMap<String, String>,
     pub contents: &'a mut String,
     pub lines: &'a Vec<&'a str>,
-    pub var_subs: &'a Regex,
+    pub ext_pattern: &'a [Regex; 1],
 }

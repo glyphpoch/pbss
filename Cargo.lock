@@ -61,6 +61,7 @@ dependencies = [
  "ansi_term",
  "filetime",
  "regex",
+ "util",
 ]
 
 [[package]]
@@ -69,6 +70,7 @@ version = "2.0.0"
 dependencies = [
  "filetime",
  "mynk",
+ "util",
 ]
 
 [[package]]
@@ -102,6 +104,13 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "d40c6d1b69745a6ec6fb1ca717914848da4b44ae29d9b3080cbee91d72a69b14"
 dependencies = [
  "lazy_static",
+]
+
+[[package]]
+name = "util"
+version = "0.1.0"
+dependencies = [
+ "regex",
 ]
 
 [[package]]

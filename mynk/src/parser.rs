@@ -1,6 +1,6 @@
-use crate::actions;
+use crate::{actions, State};
 use crate::file_include;
-use crate::{Line, LineType, Pattern, State};
+use util::lines::{Line, LineType, Pattern};
 use std::collections::HashMap;
 
 use std::fs::File;
@@ -41,7 +41,8 @@ pub fn compile(file: &String, patterns: &[Pattern]) -> String {
     let lines: Vec<&str> = contents.split("\n").collect();
     let mut var_index: HashMap<String, String> = HashMap::new();
     let mut contents: String = String::new();
-    let var_subs_exp = regex::Regex::new(r"\$(\w+[\w\d_\-]*)*").unwrap();
+    let ext_pattern = util::words::generate_word_patterns();
+    
     while count < lcount {
         let line = lines[count];
         let class_line = get_classified_line(&line, patterns);
@@ -52,9 +53,9 @@ pub fn compile(file: &String, patterns: &[Pattern]) -> String {
             var_index: &mut var_index,
             contents: &mut contents,
             lines: &lines,
-            var_subs: &var_subs_exp,
+            ext_pattern: &ext_pattern,
         };
-        actions::actions(&mut state, &var_subs_exp);
+        actions::actions(&mut state);
         count += 1;
     }
     contents

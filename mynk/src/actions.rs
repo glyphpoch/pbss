@@ -1,7 +1,11 @@
-use crate::LineType;
+use util::lines::LineType;
 use crate::State;
 use ansi_term::Colour::{Blue, Red};
 use regex::Regex;
+
+pub fn act_calc(cs: &mut State) {
+
+}
 
 pub fn act_track_vars(cs: &mut State) {
     for cap in cs.patterns[0]
@@ -44,8 +48,8 @@ pub fn push_contents(cs: &mut State) {
     cs.contents.push_str("\n");
 }
 
-pub fn act_generic(cs: &mut State, ve: &Regex) {
-    for cap in ve.captures_iter(&cs.class_line.string.to_string()) {
+pub fn act_generic(cs: &mut State) {
+    for cap in cs.ext_pattern[0].captures_iter(&cs.class_line.string.to_string()) {
         cs.class_line.string = cs
             .class_line
             .string
@@ -55,18 +59,18 @@ pub fn act_generic(cs: &mut State, ve: &Regex) {
     cs.contents.push_str("\n");
 }
 
-pub fn actions(mut state: &mut State, var_exp: &Regex) {
+pub fn actions(mut state: &mut State) {
     for cl in state.class_line.ltype.clone() {
         match cl {
             LineType::Variable => act_track_vars(&mut state),
             LineType::OneLineComment => act_ol_comment(&mut state),
             LineType::CommentStart => act_ml_comment(&mut state),
             LineType::BlockStart => push_contents(&mut state),
-            LineType::Style => act_generic(&mut state, &var_exp),
+            LineType::Style => act_generic(&mut state),
             LineType::BlockEnd => push_contents(&mut state),
-            LineType::AtRule => act_generic(&mut state, &var_exp),
+            LineType::AtRule => act_generic(&mut state),
             LineType::Newline => push_contents(&mut state),
-            LineType::OneLineStyle => act_generic(&mut state, &var_exp),
+            LineType::OneLineStyle => act_generic(&mut state),
             LineType::Invalid => {
                 let line_no = format!("{}", *state.count + 1);
                 eprintln!(

@@ -1,4 +1,4 @@
-use mynk::generate_basic_patterns;
+use util::lines::generate_basic_patterns;
 use mynk::parser::compile;
 use mynk::{file_handling, get_file_mod_time, Arguments};
 use std::thread;
@@ -8,7 +8,7 @@ use std::time::Duration;
 #[derive(std::cmp::PartialEq)]
 struct Change;
 
-fn compile_file(args: &Arguments, patterns: &[mynk::Pattern]) {
+fn compile_file(args: &Arguments, patterns: &[util::lines::Pattern]) {
     let contents = compile(&args.readfile, &patterns);
     file_handling::writer(contents, &args);
 }
