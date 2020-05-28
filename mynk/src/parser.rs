@@ -1,7 +1,7 @@
-use crate::{actions, State};
 use crate::file_include;
-use util::lines::{Line, LineType, Pattern};
+use crate::{actions, State};
 use std::collections::HashMap;
+use util::lines::{Line, LineType, Pattern};
 
 use std::fs::File;
 use std::io::prelude::*;
@@ -42,7 +42,7 @@ pub fn compile(file: &String, patterns: &[Pattern]) -> String {
     let mut var_index: HashMap<String, String> = HashMap::new();
     let mut contents: String = String::new();
     let ext_pattern = util::words::generate_word_patterns();
-    
+
     while count < lcount {
         let line = lines[count];
         let class_line = get_classified_line(&line, patterns);

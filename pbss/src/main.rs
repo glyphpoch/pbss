@@ -1,9 +1,9 @@
-use util::lines::generate_basic_patterns;
 use mynk::parser::compile;
 use mynk::{file_handling, get_file_mod_time, Arguments};
-use std::thread;
 use std::sync::mpsc;
+use std::thread;
 use std::time::Duration;
+use util::lines::generate_basic_patterns;
 
 #[derive(std::cmp::PartialEq)]
 struct Change;
@@ -39,7 +39,7 @@ fn main() {
                 }
             }
         });
-        for rmsg in rx{
+        for rmsg in rx {
             if rmsg == Change {
                 compile_file(&copy_args, &patterns);
             }

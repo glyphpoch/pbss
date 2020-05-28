@@ -15,7 +15,7 @@ multiple
 lines */
 
 section {
-	color: $accent_color $font-color1;
+	color: $accent_color;
 	background: $background;
 }
 
@@ -32,3 +32,7 @@ section { height: 10px; }
 /* including */
 
 include(tests/test2.pbss);
+
+h1 {
+	height: 8 / 10;
+}

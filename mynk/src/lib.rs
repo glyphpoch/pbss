@@ -6,7 +6,7 @@ pub mod file_handling;
 use filetime::FileTime;
 use std::fs::metadata;
 pub mod file_include;
-use util::lines::{Line,Pattern};
+use util::lines::{Line, Pattern};
 
 // Pbss Version
 static PBSS_VERSION: &str = "Pbss-2.0 Beryllium";
@@ -81,5 +81,5 @@ pub struct State<'a> {
     pub var_index: &'a mut std::collections::HashMap<String, String>,
     pub contents: &'a mut String,
     pub lines: &'a Vec<&'a str>,
-    pub ext_pattern: &'a [Regex; 1],
+    pub ext_pattern: &'a [Regex; 2],
 }
