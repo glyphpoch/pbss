@@ -1,5 +1,6 @@
-pub mod actions;
+pub mod control;
 pub mod parser;
+pub mod actions;
 use regex::Regex;
 use std::env::args;
 pub mod file_handling;

@@ -1,5 +1,5 @@
 use crate::file_include;
-use crate::{actions, State};
+use crate::{control, State};
 use std::collections::HashMap;
 use util::lines::{Line, LineType, Pattern};
 
@@ -55,7 +55,7 @@ pub fn compile(file: &String, patterns: &[Pattern]) -> String {
             lines: &lines,
             ext_pattern: &ext_pattern,
         };
-        actions::actions(&mut state);
+        control::actions(&mut state);
         count += 1;
     }
     contents

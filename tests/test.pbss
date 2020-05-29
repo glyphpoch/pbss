@@ -34,5 +34,5 @@ section { height: 10px; }
 include(tests/test2.pbss);
 
 h1 {
-	height: 8 / 10;
+	height: 22 / 7;
 }

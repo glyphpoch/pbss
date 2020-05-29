@@ -1,6 +1,4 @@
 use crate::State;
-use ansi_term::Colour::{Blue, Red};
-use util::lines::LineType;
 // use regex::Regex;
 
 fn add_line(cs: &mut State, line: &str) {
@@ -8,7 +6,7 @@ fn add_line(cs: &mut State, line: &str) {
     cs.contents.push('\n');
 }
 
-fn act_resolve_vars(cs: &mut State) {
+pub fn act_resolve_vars(cs: &mut State) {
     for cap in cs.ext_pattern[0].captures_iter(&cs.class_line.string.to_string()) {
         cs.class_line.string = cs
             .class_line
@@ -17,7 +15,7 @@ fn act_resolve_vars(cs: &mut State) {
     }
 }
 
-fn act_calc(cs: &mut State) {
+pub fn act_calc(cs: &mut State) {
     for cap in cs.ext_pattern[1].captures_iter(&cs.class_line.string.clone()) {
         let num1: isize = cap[1].to_string().parse().expect("Not an integer");
         let num2: isize = cap[3].to_string().parse().expect("Not an integer");
@@ -41,6 +39,8 @@ fn act_calc(cs: &mut State) {
                     .replace(&cap[0], format!("{}", num1 * num2).as_str())
             }
             "/" => {
+                let num1 = num1 as f64;
+                let num2 = num2 as f64;
                 cs.class_line.string = cs
                     .class_line
                     .string
@@ -51,7 +51,7 @@ fn act_calc(cs: &mut State) {
     }
 }
 
-fn act_track_vars(cs: &mut State) {
+pub fn act_track_vars(cs: &mut State) {
     for cap in cs.patterns[0]
         .expression
         .captures_iter(&cs.class_line.string)
@@ -60,7 +60,7 @@ fn act_track_vars(cs: &mut State) {
     }
 }
 
-fn act_ol_comment(mut cs: &mut State) {
+pub fn act_ol_comment(mut cs: &mut State) {
     for cap in cs.patterns[3]
         .expression
         .captures_iter(&cs.class_line.string.clone())
@@ -69,8 +69,8 @@ fn act_ol_comment(mut cs: &mut State) {
     }
 }
 
-fn act_ml_comment(mut cs: &mut State) {
-    push_contents(&mut cs);
+pub fn act_ml_comment(mut cs: &mut State) {
+    act_push_contents(&mut cs);
     loop {
         let nl = cs.lines[*cs.count + &1];
         if !cs.patterns[2].expression.is_match(nl) {
@@ -83,41 +83,13 @@ fn act_ml_comment(mut cs: &mut State) {
     }
 }
 
-fn push_contents(mut cs: &mut State) {
+pub fn act_push_contents(mut cs: &mut State) {
     let start = cs.class_line.string.clone();
     add_line(&mut cs, &start);
 }
 
-fn act_generic(mut cs: &mut State) {
+pub fn act_generic(mut cs: &mut State) {
     act_resolve_vars(&mut cs);
     act_calc(&mut cs);
-    push_contents(&mut cs);
-}
-
-pub fn actions(mut state: &mut State) {
-    for cl in state.class_line.ltype.clone() {
-        match cl {
-            LineType::Variable => act_track_vars(&mut state),
-            LineType::OneLineComment => act_ol_comment(&mut state),
-            LineType::CommentStart => act_ml_comment(&mut state),
-            LineType::BlockStart => push_contents(&mut state),
-            LineType::Style => act_generic(&mut state),
-            LineType::BlockEnd => push_contents(&mut state),
-            LineType::AtRule => act_generic(&mut state),
-            LineType::Newline => push_contents(&mut state),
-            LineType::OneLineStyle => act_generic(&mut state),
-            LineType::Invalid => {
-                let line_no = format!("{}", *state.count + 1);
-                eprintln!(
-                    "{}| {}",
-                    Blue.bold().paint(line_no),
-                    Red.paint(&state.class_line.string.to_string())
-                );
-
-                eprintln!("{}", Red.bold().paint("\t|"));
-                eprintln!("{}", Red.bold().paint("\t:Invalid Line"));
-            }
-            _ => {}
-        }
-    }
+    act_push_contents(&mut cs);
 }
