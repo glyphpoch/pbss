@@ -14,6 +14,7 @@ This is the official documentation for Pbss and has been rewritten for Pbss's se
     * [Traditional CSS](#old-css)
     * [Variables](#vars)
     * [Including multiple files](#other-files)
+    * Arithmetic
     * [Error Handling](#error-catching)
 
 
@@ -197,6 +198,32 @@ Now if you compile *main.pbss*, you get this
 ```
 How cool!! Something you should follow is to always put all includes in the top, because if you put it in bottom, some styles may be overriden, not by Pbss but by browsers  
 **Also if you use variables, their definition files must be included first before use.**
+
+### <a name="arithmetic"></a> Arithmetic
+Pbss can handle basic arithmetic as of version 2.1, in order to use it, simple put the expression as you write in other langauges. For example we added 2 and 5 in this example
+```
+p {
+    height: 2 + 5;
+}
+```
+This would generate the following code
+``` css
+p {
+    height: 7;
+}
+```
+You can add a unit after the last opprand of the expression to attach it to the end, For example to add px at the end of the 7, you can write this
+```
+p {
+    height: 2 + 5px;
+}
+```
+Result
+``` css
+p {
+    height: 7px;
+}
+```
 
 ### <a name="error-catching"></a>Error Catching
 Pbss can catch invalid lines you may have mistyped in your file. For rxample, let's write this is a file
