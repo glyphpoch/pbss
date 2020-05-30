@@ -1,7 +1,8 @@
+use crate::control;
 use crate::file_include;
-use crate::{control, State};
 use std::collections::HashMap;
 use util::lines::{Line, LineType, Pattern};
+use util::State;
 
 use std::fs::File;
 use std::io::prelude::*;

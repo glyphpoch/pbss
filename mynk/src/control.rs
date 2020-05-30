@@ -1,7 +1,6 @@
-use crate::actions::*;
+use util::actions::*;
 use util::lines::LineType;
-use ansi_term::Colour::{Yellow, Red};
-use crate::State;
+use util::State;
 
 pub fn actions(mut state: &mut State) {
     for cl in state.class_line.ltype.clone() {
@@ -15,17 +14,7 @@ pub fn actions(mut state: &mut State) {
             LineType::AtRule => act_generic(&mut state),
             LineType::Newline => act_push_contents(&mut state),
             LineType::OneLineStyle => act_generic(&mut state),
-            LineType::Invalid => {
-                let line_no = format!("{}", *state.count + 1);
-                eprintln!(
-                    "{}| {}",
-                    Yellow.bold().paint(line_no),
-                    Red.paint(&state.class_line.string.to_string())
-                );
-
-                eprintln!("{}", Red.bold().paint("\t|"));
-                eprintln!("{}", Red.bold().paint("\t:Invalid Line"));
-            }
+            LineType::Invalid => act_invalid(&state),
             _ => {}
         }
     }

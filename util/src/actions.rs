@@ -1,5 +1,5 @@
 use crate::State;
-// use regex::Regex;
+use ansi_term::Colour::{Red, Yellow};
 
 fn add_line(cs: &mut State, line: &str) {
     cs.contents.push_str(line);
@@ -41,17 +41,18 @@ pub fn act_calc(cs: &mut State) {
             "/" => {
                 if num1 % num2 == 0 {
                     cs.class_line.string = cs
-                    .class_line
-                    .string
-                    .replace(&cap[0], format!("{}", num1 / num2).as_str())
-                    } else {
+                        .class_line
+                        .string
+                        .replace(&cap[0], format!("{}", num1 / num2).as_str())
+                } else {
                     let num1 = num1 as f64;
                     let num2 = num2 as f64;
                     cs.class_line.string = cs
-                    .class_line
-                    .string
-                    .replace(&cap[0], format!("{}", num1 / num2).as_str())
-                }},
+                        .class_line
+                        .string
+                        .replace(&cap[0], format!("{}", num1 / num2).as_str())
+                }
+            }
             _ => {}
         }
     }
@@ -98,4 +99,16 @@ pub fn act_generic(mut cs: &mut State) {
     act_resolve_vars(&mut cs);
     act_calc(&mut cs);
     act_push_contents(&mut cs);
+}
+
+pub fn act_invalid(cs: &State) {
+    let line_no = format!("{}", *cs.count + 1);
+    eprintln!(
+        "{}| {}",
+        Yellow.bold().paint(line_no),
+        Red.paint(&cs.class_line.string.to_string())
+    );
+
+    eprintln!("{}", Red.bold().paint("\t|"));
+    eprintln!("{}", Red.bold().paint("\t:Invalid Line"));
 }

@@ -1,13 +1,10 @@
 pub mod control;
 pub mod parser;
-pub mod actions;
-use regex::Regex;
 use std::env::args;
 pub mod file_handling;
 use filetime::FileTime;
 use std::fs::metadata;
 pub mod file_include;
-use util::lines::{Line, Pattern};
 
 // Pbss Version
 static PBSS_VERSION: &str = "Pbss-2.0 Beryllium";
@@ -73,14 +70,4 @@ pub fn get_file_mod_time(file: &String) -> i64 {
     let file_meta = metadata(file).expect("Can't get file metadata");
     let last_mod_time = FileTime::from_last_modification_time(&file_meta).seconds();
     last_mod_time
-}
-
-pub struct State<'a> {
-    pub class_line: Line,
-    pub count: &'a mut usize,
-    pub patterns: &'a [Pattern],
-    pub var_index: &'a mut std::collections::HashMap<String, String>,
-    pub contents: &'a mut String,
-    pub lines: &'a Vec<&'a str>,
-    pub ext_pattern: &'a [Regex; 2],
 }
