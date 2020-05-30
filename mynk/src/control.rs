@@ -1,6 +1,6 @@
 use crate::actions::*;
 use util::lines::LineType;
-use ansi_term::Colour::{Blue, Red};
+use ansi_term::Colour::{Yellow, Red};
 use crate::State;
 
 pub fn actions(mut state: &mut State) {
@@ -19,7 +19,7 @@ pub fn actions(mut state: &mut State) {
                 let line_no = format!("{}", *state.count + 1);
                 eprintln!(
                     "{}| {}",
-                    Blue.bold().paint(line_no),
+                    Yellow.bold().paint(line_no),
                     Red.paint(&state.class_line.string.to_string())
                 );
 

@@ -39,13 +39,19 @@ pub fn act_calc(cs: &mut State) {
                     .replace(&cap[0], format!("{}", num1 * num2).as_str())
             }
             "/" => {
-                let num1 = num1 as f64;
-                let num2 = num2 as f64;
-                cs.class_line.string = cs
+                if num1 % num2 == 0 {
+                    cs.class_line.string = cs
                     .class_line
                     .string
                     .replace(&cap[0], format!("{}", num1 / num2).as_str())
-            }
+                    } else {
+                    let num1 = num1 as f64;
+                    let num2 = num2 as f64;
+                    cs.class_line.string = cs
+                    .class_line
+                    .string
+                    .replace(&cap[0], format!("{}", num1 / num2).as_str())
+                }},
             _ => {}
         }
     }
